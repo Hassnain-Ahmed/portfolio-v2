@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(npm install tailwindcss @tailwindcss/vite)",
+      "Bash(npm install gsap lenis framer-motion react-router-dom @splinetool/react-spline clsx tailwind-merge class-variance-authority lucide-react)"
+    ]
+  }
+}
