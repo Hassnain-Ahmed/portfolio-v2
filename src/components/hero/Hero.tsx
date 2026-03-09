@@ -1,10 +1,12 @@
 import { Highlighter } from "@/components/ui/highlighter";
 import { gsap } from "gsap";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Hero() {
   const headingRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
   const [splineLoaded, setSplineLoaded] = useState(false);
 
   useEffect(() => {
@@ -75,6 +77,14 @@ export default function Hero() {
           { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 1.2 }
         );
       }
+
+      if (ctaRef.current) {
+        gsap.fromTo(
+          ctaRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 1.6 }
+        );
+      }
     });
 
     return () => ctx.revert();
@@ -134,6 +144,23 @@ export default function Hero() {
             </Highlighter>
             .
           </p>
+        )}
+
+        {splineLoaded && (
+          <div ref={ctaRef} className="mt-10 flex gap-4 opacity-0">
+            <Link
+              to="/work"
+              className="pointer-events-auto rounded-full bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+            >
+              My Work
+            </Link>
+            <Link
+              to="/contact"
+              className="pointer-events-auto rounded-full border border-white/50 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white/20"
+            >
+              Get in Touch
+            </Link>
+          </div>
         )}
       </div>
 

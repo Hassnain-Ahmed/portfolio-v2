@@ -119,20 +119,27 @@ export default function Navbar() {
   const location = useLocation();
 
   useEffect(() => {
-    const viewer = document.querySelector("spline-viewer");
+    // On non-home pages there is no spline-viewer — show immediately
+    if (location.pathname !== "/") {
+      setVisible(true);
+      return;
+    }
 
     const show = () => setVisible(true);
+    const viewer = document.querySelector("spline-viewer");
 
     if (viewer) {
       viewer.addEventListener("load", show);
     }
-    const timeout = setTimeout(show, 15400);
+
+    // Reduced fallback: 3s instead of 15s
+    const timeout = setTimeout(show, 3000);
 
     return () => {
       viewer?.removeEventListener("load", show);
       clearTimeout(timeout);
     };
-  }, []);
+  }, [location.pathname]);
 
   return (
     <>
