@@ -25,3 +25,4 @@ dist-ssr
 
 # Build-time fetched GitHub data (contains no secrets, but regenerated per build)
 src/components/about/githubData.json
+.env
