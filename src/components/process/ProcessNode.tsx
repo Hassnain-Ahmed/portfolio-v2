@@ -8,10 +8,23 @@ import {
   IconCode,
   IconTestPipe,
   IconRocket,
+  IconBrain,
+  IconDatabase,
+  IconServer,
+  IconDevices,
+  IconBug,
+  IconGitBranch,
+  IconTerminal,
+  IconCloudComputing,
+  IconApi,
+  IconLock,
+  IconChartBar,
+  IconRefresh,
+  IconSettings,
 } from "@tabler/icons-react";
 import type { ProcessNodeData } from "./processData";
 
-const ICON_MAP = {
+const ICON_MAP: Record<string, React.ComponentType<{ size?: number; color?: string }>> = {
   IconBulb,
   IconSearch,
   IconLayersIntersect,
@@ -19,6 +32,19 @@ const ICON_MAP = {
   IconCode,
   IconTestPipe,
   IconRocket,
+  IconBrain,
+  IconDatabase,
+  IconServer,
+  IconDevices,
+  IconBug,
+  IconGitBranch,
+  IconTerminal,
+  IconCloudComputing,
+  IconApi,
+  IconLock,
+  IconChartBar,
+  IconRefresh,
+  IconSettings,
 };
 
 interface NodeStateProps {

@@ -1,8 +1,11 @@
 import { Wrench } from "lucide-react";
 import GlassCard from "./GlassCard";
-import { skills } from "./aboutData";
 
-export default function SkillsCard() {
+interface SkillsCardProps {
+  skills?: string[];
+}
+
+export default function SkillsCard({ skills = [] }: SkillsCardProps) {
   return (
     <GlassCard className="p-5">
       <h4 className="mb-3 flex items-center gap-2 font-mono text-xs font-medium text-neutral-600">

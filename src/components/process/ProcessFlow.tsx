@@ -9,7 +9,8 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useEffect, useRef, useMemo } from "react";
-import { NODE_DATA, EDGE_DEFINITIONS, NODE_WIDTH, NODE_HEIGHT } from "./processData";
+import { NODE_WIDTH, NODE_HEIGHT } from "./processData";
+import type { ProcessNodeDef, EdgeDef } from "./processData";
 import ProcessNode from "./ProcessNode";
 import ProcessEdge from "./ProcessEdge";
 import type { EdgeProgress } from "./useProcessScroll";
@@ -18,6 +19,8 @@ const nodeTypes = { processNode: ProcessNode };
 const edgeTypes = { processEdge: ProcessEdge };
 
 interface ProcessFlowProps {
+  nodes: ProcessNodeDef[];
+  edges: EdgeDef[];
   activeStep: number;
   edgeProgress: EdgeProgress;
   hoveredStep: number | null;
@@ -25,6 +28,8 @@ interface ProcessFlowProps {
 }
 
 function ProcessFlowInner({
+  nodes: nodeData,
+  edges: edgeData,
   activeStep,
   edgeProgress,
   hoveredStep,
@@ -34,43 +39,43 @@ function ProcessFlowInner({
   const hasZoomedOut = useRef(false);
   const prevStep = useRef(-2);
 
-  // Focus active node in center — or zoom out to show all on Launch
   useEffect(() => {
+    if (nodeData.length === 0) return;
     const isFirstRender = prevStep.current === -2;
     prevStep.current = activeStep;
 
-    if (activeStep === 6 && !hasZoomedOut.current) {
+    if (activeStep === nodeData.length - 1 && !hasZoomedOut.current) {
       hasZoomedOut.current = true;
-      // First: pan to the Launch node so the user sees it animate in
-      const launchNode = NODE_DATA[6];
+      const launchNode = nodeData[nodeData.length - 1];
       setCenter(
         launchNode.position.x + NODE_WIDTH / 2,
         launchNode.position.y + NODE_HEIGHT / 2,
         { zoom: 1.15, duration: isFirstRender ? 0 : 650 }
       );
-      // Then: zoom out to show the full graph after the entry animation settles
       setTimeout(() => {
         fitView({ duration: 1400, padding: 0.18, minZoom: 0.3, maxZoom: 0.9 });
       }, 1500);
       return;
     }
 
-    if (activeStep < 6) {
+    if (activeStep < nodeData.length - 1) {
       hasZoomedOut.current = false;
     }
 
     const targetIndex = Math.max(0, activeStep);
-    const node = NODE_DATA[targetIndex];
-    setCenter(
-      node.position.x + NODE_WIDTH / 2,
-      node.position.y + NODE_HEIGHT / 2,
-      { zoom: 1.15, duration: isFirstRender ? 0 : 650 }
-    );
-  }, [activeStep, setCenter, fitView]);
+    const node = nodeData[targetIndex];
+    if (node) {
+      setCenter(
+        node.position.x + NODE_WIDTH / 2,
+        node.position.y + NODE_HEIGHT / 2,
+        { zoom: 1.15, duration: isFirstRender ? 0 : 650 }
+      );
+    }
+  }, [activeStep, setCenter, fitView, nodeData]);
 
   const nodes: Node[] = useMemo(
     () =>
-      NODE_DATA.map((n, i) => ({
+      nodeData.map((n, i) => ({
         id: n.id,
         type: "processNode",
         position: n.position,
@@ -87,12 +92,12 @@ function ProcessFlowInner({
         draggable: false,
         selectable: false,
       })),
-    [activeStep, hoveredStep, setHoveredStep]
+    [activeStep, hoveredStep, setHoveredStep, nodeData]
   );
 
   const edges: Edge[] = useMemo(
     () =>
-      EDGE_DEFINITIONS.map((e, i) => ({
+      edgeData.map((e, i) => ({
         id: e.id,
         source: e.source,
         target: e.target,
@@ -104,7 +109,7 @@ function ProcessFlowInner({
           isHighlighted: hoveredStep !== null && i < hoveredStep,
         },
       })),
-    [activeStep, edgeProgress, hoveredStep]
+    [activeStep, edgeProgress, hoveredStep, edgeData]
   );
 
   return (

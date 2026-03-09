@@ -1,18 +1,20 @@
 import { InfiniteGridBackground } from "@/components/ui/the-infinite-grid";
+import { useProcessSteps } from "@/hooks/useProcessSteps";
 import { motion, useMotionValue } from "motion/react";
 import React, { useRef, useState } from "react";
-import { NODE_DATA } from "./processData";
 import ProcessFlow from "./ProcessFlow";
 import { useProcessScroll } from "./useProcessScroll";
 
 export default function ProcessSection() {
+  const { data, isLoading } = useProcessSteps();
+  const nodes = data?.nodes ?? [];
+  const edges = data?.edges ?? [];
+
   const { outerRef, activeStep, edgeProgress } = useProcessScroll(
-    NODE_DATA.length
+    nodes.length
   );
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
-  // Track mouse at the sticky container level so the z-10 React Flow canvas
-  // doesn't swallow the events before they reach the z-0 background.
   const stickyRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(-9999);
   const mouseY = useMotionValue(-9999);
@@ -27,6 +29,14 @@ export default function ProcessSection() {
     mouseX.set(-9999);
     mouseY.set(-9999);
   };
+
+  if (isLoading || nodes.length === 0) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-[#f7f7f8]">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-neutral-300 border-t-purple-500" />
+      </div>
+    );
+  }
 
   return (
     <div ref={outerRef} style={{ height: "500vh" }}>
@@ -64,7 +74,7 @@ export default function ProcessSection() {
         </div>
 
         {/* Step label above dots */}
-        {activeStep >= 0 && activeStep < NODE_DATA.length && (
+        {activeStep >= 0 && activeStep < nodes.length && (
           <motion.div
             key={activeStep}
             initial={{ opacity: 0, y: 8 }}
@@ -75,14 +85,14 @@ export default function ProcessSection() {
               className="font-mono text-xs tracking-widest uppercase"
               style={{ color: "#7c3aed" }}
             >
-              {NODE_DATA[activeStep].data.label}
+              {nodes[activeStep].data.label}
             </span>
           </motion.div>
         )}
 
         {/* Step progress dots */}
         <div className="pointer-events-none absolute bottom-8 left-0 right-0 z-10 flex items-center justify-center gap-2">
-          {NODE_DATA.map((_, i) => (
+          {nodes.map((_, i) => (
             <motion.div
               key={i}
               className="rounded-full"
@@ -104,6 +114,8 @@ export default function ProcessSection() {
         {/* React Flow canvas */}
         <div className="absolute inset-0 z-10">
           <ProcessFlow
+            nodes={nodes}
+            edges={edges}
             activeStep={activeStep}
             edgeProgress={edgeProgress}
             hoveredStep={hoveredStep}
@@ -116,14 +128,14 @@ export default function ProcessSection() {
           className="pointer-events-none absolute inset-x-0 top-0 z-20 flex flex-col items-center mt-30"
           initial={false}
           animate={
-            activeStep === NODE_DATA.length - 1
+            activeStep === nodes.length - 1
               ? { opacity: 1, y: 0 }
               : { opacity: 0, y: -14 }
           }
           transition={{
             duration: 0.7,
             ease: [0.25, 1, 0.5, 1],
-            delay: activeStep === NODE_DATA.length - 1 ? 2.6 : 0,
+            delay: activeStep === nodes.length - 1 ? 2.6 : 0,
           }}
         >
           <p

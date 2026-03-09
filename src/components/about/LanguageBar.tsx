@@ -1,11 +1,13 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { useGitHub } from "./GitHubContext";
+import { useLanguages } from "@/hooks/useLanguages";
 import { defaultLanguages } from "./aboutData";
 
 export default function LanguageBar() {
   const { data } = useGitHub();
-  const languages = data?.languages ?? defaultLanguages;
+  const { data: dbLanguages } = useLanguages();
+  const languages = data?.languages ?? dbLanguages ?? defaultLanguages;
 
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });

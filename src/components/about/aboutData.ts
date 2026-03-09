@@ -35,50 +35,6 @@ export interface Experience {
   description: string;
 }
 
-// --- Profile (static fallback) ---
-export const profile: ProfileInfo = {
-  name: "Hassnain Ahmed",
-  handle: "@Hassnain-Ahmed",
-  title: "Full Stack Developer",
-  bio: "Full Stack Developer with 3+ years building production-grade web apps using React, Next.js, Node.js, Python, and FastAPI.",
-  avatar: "/avatar.jpg",
-  location: "G13, Islamabad",
-  email: "dev.hassnain77@gmail.com",
-  status: { emoji: "//", text: "Building cool stuff" },
-  highlights: ["Solution Architect", "SZABIST Recognized"],
-};
-
-// --- Experience (from resume) ---
-export const experience: Experience[] = [
-  {
-    role: "Solution Architect",
-    company: "AIDEVGEN, Islamabad",
-    period: "Jan 2025 - Present",
-    description:
-      "Architected cloud-native solutions for 5+ clients on AWS (EC2, S3, Lambda), defining API structures and microservice blueprints.",
-  },
-  {
-    role: "MERN Stack Intern",
-    company: "Pixel Technosol",
-    period: "Jun 2024 - Aug 2024",
-    description:
-      "Developed full-stack features using React.js, Node.js, and MongoDB; integrated REST APIs and deployed to cloud infrastructure.",
-  },
-  {
-    role: "Freelance Full Stack Developer",
-    company: "Self-employed",
-    period: "Oct 2023 - Ongoing",
-    description:
-      "Delivered 5+ client web apps using MERN and PHP; designed MySQL/MongoDB schemas and integrated payment services.",
-  },
-];
-
-// --- Skills (curated) ---
-export const skills: string[] = [
-  "React", "Next.js", "TypeScript", "Node.js", "Python",
-  "FastAPI", "AWS", "Docker", "MongoDB", "TailwindCSS",
-];
-
 // --- Fallback languages ---
 export const defaultLanguages: Language[] = [
   { name: "TypeScript", percentage: 42, color: "#3178C6" },

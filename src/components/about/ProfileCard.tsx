@@ -1,10 +1,22 @@
 import { Briefcase, Mail, MapPin } from "lucide-react";
 import GlassCard from "./GlassCard";
 import { useGitHub } from "./GitHubContext";
-import { profile, skills } from "./aboutData";
+import type { ProfileInfo } from "./aboutData";
 
-export default function ProfileCard() {
+interface ProfileCardProps {
+  profile?: ProfileInfo;
+  skills?: string[];
+}
+
+export default function ProfileCard({ profile: profileData, skills = [] }: ProfileCardProps) {
   const { data } = useGitHub();
+
+  const fallback: ProfileInfo = {
+    name: "", handle: "", title: "", bio: "", avatar: "",
+    location: "", email: "", status: { emoji: "", text: "" }, highlights: [],
+  };
+  const profile = profileData ?? fallback;
+
   const avatar = data?.avatar || profile.avatar;
   const name = data?.name || profile.name;
   const handle = data?.handle || profile.handle;

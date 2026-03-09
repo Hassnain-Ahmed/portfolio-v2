@@ -1,9 +1,15 @@
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight, Github, Linkedin, Mail, MapPin, Send } from "lucide-react";
+import { useContactInfo } from "@/hooks/useContactInfo";
+import { supabase } from "@/lib/supabase";
+import { ArrowUpRight, Github, Globe, Instagram, Linkedin, Mail, MapPin, Send, Twitter, Youtube, type LucideIcon } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import PixelCat, { type CatHandle } from "./PixelCat";
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  Github, Linkedin, Mail, Twitter, Instagram, Youtube, Globe,
+};
 
 interface FormData {
   name: string;
@@ -11,27 +17,6 @@ interface FormData {
   subject: string;
   message: string;
 }
-
-const SOCIALS = [
-  {
-    icon: Github,
-    label: "GitHub",
-    href: "https://github.com/Hassnain-Ahmed",
-    handle: "@Hassnain-Ahmed",
-  },
-  {
-    icon: Linkedin,
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/hassnain-ahmed",
-    handle: "Hassnain Ahmed",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    href: "mailto:dev.hassnain77@gmail.com",
-    handle: "dev.hassnain77@gmail.com",
-  },
-];
 
 function GlassCard({
   className,
@@ -130,6 +115,7 @@ function ClayTextarea({
 }
 
 export default function ContactSection() {
+  const { data: contactInfo } = useContactInfo();
   const sectionRef = useRef<HTMLElement>(null);
   const catRef = useRef<CatHandle>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
@@ -160,8 +146,17 @@ export default function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    await new Promise((r) => setTimeout(r, 1500));
+    const { error } = await supabase.from("contact_messages").insert({
+      name: form.name,
+      email: form.email,
+      subject: form.subject,
+      message: form.message,
+    });
     setSending(false);
+    if (error) {
+      catRef.current?.say("Oops, something went wrong. Try again!", 4000);
+      return;
+    }
     setSent(true);
     catRef.current?.say("We'll get in touch soon! 🐾", 5000);
     setForm({ name: "", email: "", subject: "", message: "" });
@@ -311,7 +306,7 @@ export default function ContactSection() {
                         Location
                       </p>
                       <p className="text-xs text-neutral-500">
-                        Islamabad, Pakistan
+                        {contactInfo?.location ?? "Islamabad, Pakistan"}
                       </p>
                     </div>
                   </div>
@@ -324,7 +319,7 @@ export default function ContactSection() {
                         Email
                       </p>
                       <p className="text-xs text-neutral-500">
-                        dev.hassnain77@gmail.com
+                        {contactInfo?.email ?? "dev.hassnain77@gmail.com"}
                       </p>
                     </div>
                   </div>
@@ -336,7 +331,9 @@ export default function ContactSection() {
                   Socials
                 </h3>
                 <div className="flex flex-col gap-2">
-                  {SOCIALS.map((s) => (
+                  {(contactInfo?.socials ?? []).map((s) => {
+                    const Icon = ICON_MAP[s.icon] ?? Globe;
+                    return (
                     <a
                       key={s.label}
                       href={s.href}
@@ -345,7 +342,7 @@ export default function ContactSection() {
                       className="group flex items-center gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-white/20"
                     >
                       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-neutral-100/80">
-                        <s.icon
+                        <Icon
                           size={14}
                           className="text-neutral-600"
                         />
@@ -363,7 +360,8 @@ export default function ContactSection() {
                         className="shrink-0 text-neutral-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-purple-500"
                       />
                     </a>
-                  ))}
+                    );
+                  })}
                 </div>
               </GlassCard>
 
@@ -374,7 +372,7 @@ export default function ContactSection() {
                     <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500" />
                   </span>
                   <span className="text-xs font-medium text-neutral-700">
-                    Available for freelance projects
+                    {contactInfo?.availability ?? "Available for freelance projects"}
                   </span>
                 </div>
               </GlassCard>

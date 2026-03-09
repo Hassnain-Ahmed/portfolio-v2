@@ -2,11 +2,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronRight, Folder, FolderOpen, FileCode } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { FOLDERS_ORDER, getProjectsByFolder, type Project } from "./projects";
-
-const GROUPED = getProjectsByFolder();
+import { FOLDERS_ORDER, type Project } from "./projects";
 
 interface FileTreeProps {
+  grouped: Map<string, Project[]>;
   selectedId: string;
   onSelect: (id: string) => void;
 }
@@ -25,8 +24,7 @@ function getExtColor(fileName: string) {
   return EXT_COLORS[ext] ?? "text-neutral-400";
 }
 
-export default function FileTree({ selectedId, onSelect }: FileTreeProps) {
-  const grouped = GROUPED;
+export default function FileTree({ grouped, selectedId, onSelect }: FileTreeProps) {
   const [rootOpen, setRootOpen] = useState(true);
   const [openFolders, setOpenFolders] = useState<Set<string>>(
     () => new Set([FOLDERS_ORDER[0]])

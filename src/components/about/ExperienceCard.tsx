@@ -1,8 +1,12 @@
 import { Briefcase } from "lucide-react";
 import GlassCard from "./GlassCard";
-import { experience } from "./aboutData";
+import type { Experience } from "./aboutData";
 
-export default function ExperienceCard() {
+interface ExperienceCardProps {
+  experience?: Experience[];
+}
+
+export default function ExperienceCard({ experience = [] }: ExperienceCardProps) {
   return (
     <GlassCard className="p-5">
       <h4 className="mb-4 flex items-center gap-2 font-mono text-xs font-medium text-neutral-600">

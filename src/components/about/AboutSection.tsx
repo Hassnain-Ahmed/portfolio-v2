@@ -1,5 +1,5 @@
-// import { DottedGlowBackground } from "@/components/ui/dotted-glow-background";
 import { WarpBackground } from "@/components/ui/warp-background";
+import { useProfile } from "@/hooks/useProfile";
 import { motion, useInView } from "motion/react";
 import { useMemo, useRef } from "react";
 import ContributionGraph from "./ContributionGraph";
@@ -17,6 +17,7 @@ export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const github = useGitHubData();
+  const { data: profileData, isLoading: profileLoading } = useProfile();
 
   const stats: Stat[] = useMemo(() => [
     {
@@ -40,21 +41,6 @@ export default function AboutSection() {
         ref={sectionRef}
         className="relative min-h-screen"
       >
-        {/* Previous background (commented out)
-        <DottedGlowBackground
-          className="pointer-events-none"
-          opacity={0.4}
-          gap={16}
-          radius={2}
-          color="rgba(139, 92, 246, 0.5)"
-          glowColor="rgba(139, 92, 246, 0.5)"
-          backgroundOpacity={0.2}
-          speedMin={0.2}
-          speedMax={0.8}
-          speedScale={0.6}
-        />
-        */}
-
         <WarpBackground
           className="min-h-screen bg-neutral-50 !rounded-none !border-0 !p-0"
           perspective={250}
@@ -66,7 +52,7 @@ export default function AboutSection() {
           gridColor="rgba(0, 0, 0, 0.1)"
         >
           <div className="mx-auto w-full max-w-6xl px-4 pt-20 pb-10 md:px-6 md:pt-16 md:pb-16">
-            {github.loading ? (
+            {github.loading || profileLoading ? (
               <div className="flex min-h-[60vh] items-center justify-center">
                 <div className="h-6 w-6 animate-spin rounded-full border-2 border-neutral-300 border-t-purple-500" />
               </div>
@@ -104,7 +90,10 @@ export default function AboutSection() {
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 0.1, duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
                 >
-                  <ProfileCard />
+                  <ProfileCard
+                    profile={profileData?.profile}
+                    skills={profileData?.skills}
+                  />
                   <ResumeModal />
                 </motion.div>
 
@@ -122,7 +111,7 @@ export default function AboutSection() {
                     <LanguageBar />
                   </div>
                   <div className="min-w-0">
-                    <ExperienceCard />
+                    <ExperienceCard experience={profileData?.experience} />
                   </div>
                 </motion.div>
               </div>
