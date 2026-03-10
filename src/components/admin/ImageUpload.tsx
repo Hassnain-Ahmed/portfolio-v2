@@ -36,7 +36,7 @@ export default function ImageUpload({ folder, value, onChange }: ImageUploadProp
     <div className="space-y-2">
       {value && (
         <div className="relative inline-block">
-          <img src={value} alt="" className="h-24 w-auto rounded-lg border border-gray-200 object-cover" />
+          <img src={value} alt="" className="h-24 w-auto rounded-lg border border-gray-700 object-cover" />
           <button
             onClick={() => onChange("")}
             className="absolute -right-2 -top-2 rounded-full bg-red-500 p-0.5 text-white hover:bg-red-600"
@@ -45,7 +45,7 @@ export default function ImageUpload({ folder, value, onChange }: ImageUploadProp
           </button>
         </div>
       )}
-      <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-dashed border-gray-300 px-4 py-3 text-sm text-gray-500 transition-colors hover:border-purple-400 hover:text-purple-600">
+      <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-dashed border-gray-600 px-4 py-3 text-sm text-gray-400 transition-colors hover:border-purple-400 hover:text-purple-400">
         <Upload size={16} />
         {uploading ? "Uploading..." : "Upload image"}
         <input type="file" accept="image/*" className="hidden" onChange={handleUpload} disabled={uploading} />

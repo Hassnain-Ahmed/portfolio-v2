@@ -1,8 +1,24 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronRight, Folder, FolderOpen, FileCode } from "lucide-react";
+import {
+  TypescriptOriginal,
+  JavascriptOriginal,
+  ReactOriginal,
+  PythonOriginal,
+  Html5Original,
+  Css3Original,
+  PhpOriginal,
+  RustOriginal,
+  GoOriginal,
+  SwiftOriginal,
+  KotlinOriginal,
+  CplusplusOriginal,
+  CsharpOriginal,
+} from "devicons-react";
+import type { ComponentType } from "react";
 import { cn } from "@/lib/utils";
-import { FOLDERS_ORDER, type Project } from "./projects";
+import type { Project } from "./projects";
 
 interface FileTreeProps {
   grouped: Map<string, Project[]>;
@@ -10,24 +26,43 @@ interface FileTreeProps {
   onSelect: (id: string) => void;
 }
 
-const EXT_COLORS: Record<string, string> = {
-  tsx: "text-blue-400",
-  ts: "text-blue-300",
-  jsx: "text-yellow-400",
-  glsl: "text-green-400",
-  py: "text-yellow-300",
-  rs: "text-orange-400",
+type IconComponent = ComponentType<{ size?: number | string; className?: string }>;
+
+function ReactYellow({ size, className }: { size?: number | string; className?: string }) {
+  return (
+    <span className={className} style={{ filter: "hue-rotate(180deg) saturate(1.5) brightness(1.1)" }}>
+      <ReactOriginal size={size} />
+    </span>
+  );
+}
+
+const EXT_ICONS: Record<string, IconComponent> = {
+  tsx: ReactOriginal,
+  jsx: ReactYellow,
+  ts: TypescriptOriginal,
+  js: JavascriptOriginal,
+  py: PythonOriginal,
+  rs: RustOriginal,
+  go: GoOriginal,
+  html: Html5Original,
+  css: Css3Original,
+  php: PhpOriginal,
+  swift: SwiftOriginal,
+  kt: KotlinOriginal,
+  cpp: CplusplusOriginal,
+  "c#": CsharpOriginal,
+  cs: CsharpOriginal,
 };
 
-function getExtColor(fileName: string) {
-  const ext = fileName.split(".").pop() ?? "";
-  return EXT_COLORS[ext] ?? "text-neutral-400";
+function getExtIcon(fileName: string): IconComponent {
+  const ext = fileName.split(".").pop()?.toLowerCase() ?? "";
+  return EXT_ICONS[ext] ?? FileCode;
 }
 
 export default function FileTree({ grouped, selectedId, onSelect }: FileTreeProps) {
   const [rootOpen, setRootOpen] = useState(true);
   const [openFolders, setOpenFolders] = useState<Set<string>>(
-    () => new Set([FOLDERS_ORDER[0]])
+    () => new Set([grouped.keys().next().value ?? ""])
   );
 
   const toggleFolder = (folder: string) => {
@@ -70,7 +105,7 @@ export default function FileTree({ grouped, selectedId, onSelect }: FileTreeProp
               transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
               className="overflow-hidden"
             >
-              {FOLDERS_ORDER.map((folder) => {
+              {[...grouped.keys()].map((folder) => {
                 const files = grouped.get(folder) ?? [];
                 const isOpen = openFolders.has(folder);
 
@@ -130,6 +165,7 @@ function FileItem({
   isActive: boolean;
   onSelect: (id: string) => void;
 }) {
+  const Icon = getExtIcon(file.fileName);
   return (
     <button
       onClick={() => onSelect(file.id)}
@@ -140,7 +176,7 @@ function FileItem({
           : "text-neutral-500 hover:bg-neutral-100/50"
       )}
     >
-      <FileCode size={14} className={getExtColor(file.fileName)} />
+      <Icon size={14} />
       <span>{file.fileName}</span>
     </button>
   );

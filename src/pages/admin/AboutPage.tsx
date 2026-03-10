@@ -1,3 +1,4 @@
+import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import ImageUpload from "@/components/admin/ImageUpload";
 import { useProfile } from "@/hooks/useProfile";
 import { useLanguages } from "@/hooks/useLanguages";
@@ -12,7 +13,7 @@ export default function AboutPage() {
 
   return (
     <div className="space-y-10">
-      <h1 className="text-2xl font-semibold">About</h1>
+      <h1 className="text-2xl font-semibold text-white">About</h1>
       <ProfileSection profile={data?.profile} />
       <ExperienceSection experience={data?.experience ?? []} />
       <SkillsSection skills={data?.skills ?? []} />
@@ -55,14 +56,14 @@ function ProfileSection({ profile }: { profile?: ReturnType<typeof useProfile>["
 
   return (
     <div>
-      <h2 className="text-lg font-semibold">Profile</h2>
+      <h2 className="text-lg font-semibold text-white">Profile</h2>
       <div className="mt-4 max-w-2xl space-y-4">
         <Field label="Name" value={form.name} onChange={v => setForm({ ...form, name: v })} />
         <Field label="Handle" value={form.handle} onChange={v => setForm({ ...form, handle: v })} />
         <Field label="Title" value={form.title} onChange={v => setForm({ ...form, title: v })} />
         <div className="space-y-1">
-          <label className="text-sm font-medium text-gray-700">Bio</label>
-          <textarea value={form.bio} onChange={e => setForm({ ...form, bio: e.target.value })} rows={3} className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" />
+          <label className="text-sm font-medium text-gray-300">Bio</label>
+          <textarea value={form.bio} onChange={e => setForm({ ...form, bio: e.target.value })} rows={3} className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-gray-100 outline-none placeholder:text-gray-500 focus:border-purple-500 focus:ring-1 focus:ring-purple-500" />
         </div>
         <Field label="Location" value={form.location} onChange={v => setForm({ ...form, location: v })} />
         <Field label="Email" value={form.email} onChange={v => setForm({ ...form, email: v })} />
@@ -70,7 +71,7 @@ function ProfileSection({ profile }: { profile?: ReturnType<typeof useProfile>["
         <Field label="Status Text" value={form.status_text} onChange={v => setForm({ ...form, status_text: v })} />
         <Field label="Highlights (comma-separated)" value={highlightInput} onChange={setHighlightInput} />
         <div className="space-y-1">
-          <label className="text-sm font-medium text-gray-700">Avatar</label>
+          <label className="text-sm font-medium text-gray-300">Avatar</label>
           <ImageUpload folder="about" value={form.avatar_url} onChange={v => setForm({ ...form, avatar_url: v })} />
         </div>
         <button onClick={save} disabled={saving} className="rounded-lg bg-purple-600 px-6 py-2 text-sm font-medium text-white hover:bg-purple-700 disabled:opacity-50">
@@ -85,6 +86,7 @@ function ProfileSection({ profile }: { profile?: ReturnType<typeof useProfile>["
 function ExperienceSection({ experience }: { experience: { role: string; company: string; period: string; description: string }[] }) {
   const [editing, setEditing] = useState<{ id?: string; role: string; company: string; period: string; description: string; sort_order: number } | null>(null);
   const [saving, setSaving] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<{ role: string; company: string } | null>(null);
 
   const openNew = () => setEditing({ role: "", company: "", period: "", description: "", sort_order: experience.length });
   const openEdit = async (exp: typeof experience[0], i: number) => {
@@ -106,26 +108,27 @@ function ExperienceSection({ experience }: { experience: { role: string; company
     setSaving(false);
   };
 
-  const remove = async (exp: typeof experience[0]) => {
-    if (!confirm("Delete this experience?")) return;
-    await supabase.from("experience").delete().eq("role", exp.role).eq("company", exp.company);
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
+    await supabase.from("experience").delete().eq("role", deleteTarget.role).eq("company", deleteTarget.company);
     await queryClient.invalidateQueries({ queryKey: ["profile"] });
+    setDeleteTarget(null);
   };
 
   if (editing) {
     return (
       <div>
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">{editing.id ? "Edit" : "Add"} Experience</h2>
-          <button onClick={() => setEditing(null)} className="text-gray-400 hover:text-gray-600"><X size={20} /></button>
+          <h2 className="text-lg font-semibold text-white">{editing.id ? "Edit" : "Add"} Experience</h2>
+          <button onClick={() => setEditing(null)} className="text-gray-400 hover:text-gray-200"><X size={20} /></button>
         </div>
         <div className="mt-4 max-w-2xl space-y-4">
           <Field label="Role" value={editing.role} onChange={v => setEditing({ ...editing, role: v })} />
           <Field label="Company" value={editing.company} onChange={v => setEditing({ ...editing, company: v })} />
           <Field label="Period" value={editing.period} onChange={v => setEditing({ ...editing, period: v })} placeholder="e.g. Jan 2025 - Present" />
           <div className="space-y-1">
-            <label className="text-sm font-medium text-gray-700">Description</label>
-            <textarea value={editing.description} onChange={e => setEditing({ ...editing, description: e.target.value })} rows={3} className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" />
+            <label className="text-sm font-medium text-gray-300">Description</label>
+            <textarea value={editing.description} onChange={e => setEditing({ ...editing, description: e.target.value })} rows={3} className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-gray-100 outline-none placeholder:text-gray-500 focus:border-purple-500 focus:ring-1 focus:ring-purple-500" />
           </div>
           <button onClick={save} disabled={saving} className="rounded-lg bg-purple-600 px-6 py-2 text-sm font-medium text-white hover:bg-purple-700 disabled:opacity-50">
             {saving ? "Saving..." : "Save"}
@@ -138,25 +141,33 @@ function ExperienceSection({ experience }: { experience: { role: string; company
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Experience</h2>
+        <h2 className="text-lg font-semibold text-white">Experience</h2>
         <button onClick={openNew} className="flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700">
           <Plus size={16} /> Add
         </button>
       </div>
       <div className="mt-4 space-y-3">
         {experience.map((exp, i) => (
-          <div key={i} className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4">
-            <div>
-              <p className="font-medium text-gray-900">{exp.role}</p>
+          <div key={i} className="flex items-center justify-between rounded-xl border border-gray-800 bg-gray-900 p-4">
+            <div className="min-w-0">
+              <p className="font-medium text-white">{exp.role}</p>
               <p className="text-xs text-gray-500">{exp.company} · {exp.period}</p>
             </div>
-            <div className="flex gap-2">
-              <button onClick={() => openEdit(exp, i)} className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600"><Pencil size={16} /></button>
-              <button onClick={() => remove(exp)} className="rounded-lg p-2 text-gray-400 hover:bg-red-50 hover:text-red-500"><Trash2 size={16} /></button>
+            <div className="flex shrink-0 gap-2">
+              <button onClick={() => openEdit(exp, i)} className="rounded-lg p-2 text-gray-400 hover:bg-gray-700 hover:text-gray-200"><Pencil size={16} /></button>
+              <button onClick={() => setDeleteTarget({ role: exp.role, company: exp.company })} className="rounded-lg p-2 text-gray-400 hover:bg-red-500/15 hover:text-red-400"><Trash2 size={16} /></button>
             </div>
           </div>
         ))}
       </div>
+
+      <ConfirmDialog
+        open={!!deleteTarget}
+        title="Delete Experience"
+        message={`Are you sure you want to delete "${deleteTarget?.role} at ${deleteTarget?.company}"? This action cannot be undone.`}
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }
@@ -182,17 +193,17 @@ function SkillsSection({ skills }: { skills: string[] }) {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold">Skills</h2>
+      <h2 className="text-lg font-semibold text-white">Skills</h2>
       <div className="mt-4 flex flex-wrap gap-2">
         {skills.map(s => (
-          <span key={s} className="flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1 text-sm">
+          <span key={s} className="flex items-center gap-1.5 rounded-full border border-gray-700 bg-gray-800 px-3 py-1 text-sm text-gray-300">
             {s}
-            <button onClick={() => remove(s)} className="text-gray-400 hover:text-red-500"><X size={14} /></button>
+            <button onClick={() => remove(s)} className="text-gray-500 hover:text-red-400"><X size={14} /></button>
           </span>
         ))}
       </div>
       <div className="mt-3 flex gap-2">
-        <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && add()} placeholder="Add skill..." className="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-purple-500" />
+        <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && add()} placeholder="Add skill..." className="rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-gray-100 outline-none placeholder:text-gray-500 focus:border-purple-500" />
         <button onClick={add} disabled={saving} className="rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700 disabled:opacity-50">
           {saving ? "..." : "Add"}
         </button>
@@ -233,7 +244,6 @@ function LanguagesSection({ languages }: { languages: { name: string; percentage
 
   const saveAll = async () => {
     setSaving(true);
-    // Delete all and re-insert for simplicity (small table)
     await supabase.from("languages").delete().neq("id", "00000000-0000-0000-0000-000000000000");
     const rows = items.map((item, i) => ({
       name: item.name,
@@ -245,7 +255,6 @@ function LanguagesSection({ languages }: { languages: { name: string; percentage
       await supabase.from("languages").insert(rows);
     }
     await queryClient.invalidateQueries({ queryKey: ["languages"] });
-    // Refresh items with new IDs
     const { data } = await supabase.from("languages").select("*").order("sort_order");
     setItems((data ?? []).map(r => ({ id: r.id, name: r.name, percentage: r.percentage, color: r.color, sort_order: r.sort_order })));
     setSaving(false);
@@ -254,25 +263,25 @@ function LanguagesSection({ languages }: { languages: { name: string; percentage
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Languages</h2>
+        <h2 className="text-lg font-semibold text-white">Languages</h2>
         <button onClick={add} className="flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700">
           <Plus size={16} /> Add
         </button>
       </div>
       <div className="mt-4 space-y-3">
         {items.map((lang, i) => (
-          <div key={i} className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4">
+          <div key={i} className="flex flex-wrap items-center gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 sm:flex-nowrap">
             <input
               type="color"
               value={lang.color}
               onChange={e => update(i, "color", e.target.value)}
-              className="h-8 w-8 shrink-0 cursor-pointer rounded border-0"
+              className="h-8 w-8 shrink-0 cursor-pointer rounded border-0 bg-transparent"
             />
             <input
               value={lang.name}
               onChange={e => update(i, "name", e.target.value)}
               placeholder="Language name"
-              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-purple-500"
+              className="min-w-0 flex-1 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-gray-100 outline-none placeholder:text-gray-500 focus:border-purple-500"
             />
             <div className="flex items-center gap-1">
               <input
@@ -281,11 +290,11 @@ function LanguagesSection({ languages }: { languages: { name: string; percentage
                 max={100}
                 value={lang.percentage}
                 onChange={e => update(i, "percentage", parseInt(e.target.value) || 0)}
-                className="w-16 rounded-lg border border-gray-300 px-2 py-2 text-sm text-center outline-none focus:border-purple-500"
+                className="w-16 rounded-lg border border-gray-700 bg-gray-800 px-2 py-2 text-sm text-center text-gray-100 outline-none focus:border-purple-500"
               />
               <span className="text-sm text-gray-500">%</span>
             </div>
-            <button onClick={() => remove(i)} className="rounded-lg p-2 text-gray-400 hover:bg-red-50 hover:text-red-500"><Trash2 size={16} /></button>
+            <button onClick={() => remove(i)} className="shrink-0 rounded-lg p-2 text-gray-400 hover:bg-red-500/15 hover:text-red-400"><Trash2 size={16} /></button>
           </div>
         ))}
       </div>
@@ -301,8 +310,8 @@ function LanguagesSection({ languages }: { languages: { name: string; percentage
 function Field({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
     <div className="space-y-1">
-      <label className="text-sm font-medium text-gray-700">{label}</label>
-      <input value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" />
+      <label className="text-sm font-medium text-gray-300">{label}</label>
+      <input value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-gray-100 outline-none placeholder:text-gray-500 focus:border-purple-500 focus:ring-1 focus:ring-purple-500" />
     </div>
   );
 }

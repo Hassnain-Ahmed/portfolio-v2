@@ -17,6 +17,7 @@ import ProjectsPage from "@/pages/admin/ProjectsPage";
 import ProcessPage from "@/pages/admin/ProcessPage";
 import AboutPage from "@/pages/admin/AboutPage";
 import ContactAdminPage from "@/pages/admin/ContactPage";
+import MessagesPage from "@/pages/admin/MessagesPage";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -58,6 +59,7 @@ export default function App() {
               <Route path="projects" element={<ProjectsPage />} />
               <Route path="process" element={<ProcessPage />} />
               <Route path="about" element={<AboutPage />} />
+              <Route path="messages" element={<MessagesPage />} />
               <Route path="contact" element={<ContactAdminPage />} />
             </Route>
           </Routes>

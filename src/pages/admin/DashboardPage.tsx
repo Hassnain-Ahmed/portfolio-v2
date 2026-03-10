@@ -17,18 +17,18 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
+      <h1 className="text-2xl font-semibold text-white">Dashboard</h1>
       <p className="mt-1 text-sm text-gray-500">Overview of your portfolio data</p>
 
-      <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {cards.map(({ icon: Icon, label, value }) => (
-          <div key={label} className="rounded-xl border border-gray-200 bg-white p-5">
+          <div key={label} className="rounded-xl border border-gray-800 bg-gray-900 p-5">
             <div className="flex items-center gap-3">
-              <div className="rounded-lg bg-purple-50 p-2">
-                <Icon size={20} className="text-purple-600" />
+              <div className="rounded-lg bg-purple-500/15 p-2">
+                <Icon size={20} className="text-purple-400" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-gray-900">{value}</p>
+                <p className="text-2xl font-semibold text-white">{value}</p>
                 <p className="text-xs text-gray-500">{label}</p>
               </div>
             </div>
