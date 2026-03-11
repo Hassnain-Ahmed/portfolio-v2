@@ -1,28 +1,29 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "motion/react";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "@/lib/queryClient";
-import { AuthProvider } from "@/context/AuthContext";
-import Layout from "@/components/layout/Layout";
-import Home from "@/pages/Home";
-import Work from "@/pages/Work";
-import About from "@/pages/About";
-import Contact from "@/pages/Contact";
-import Process from "@/pages/Process";
-import AuthGuard from "@/components/admin/AuthGuard";
 import AdminLayout from "@/components/admin/AdminLayout";
-import LoginPage from "@/pages/admin/LoginPage";
-import DashboardPage from "@/pages/admin/DashboardPage";
-import ProjectsPage from "@/pages/admin/ProjectsPage";
-import ProcessPage from "@/pages/admin/ProcessPage";
+import AuthGuard from "@/components/admin/AuthGuard";
+import Layout from "@/components/layout/Layout";
+import { AuthProvider } from "@/context/AuthContext";
+import { queryClient } from "@/lib/queryClient";
+import About from "@/pages/About";
 import AboutPage from "@/pages/admin/AboutPage";
 import ContactAdminPage from "@/pages/admin/ContactPage";
+import DashboardPage from "@/pages/admin/DashboardPage";
+import LoginPage from "@/pages/admin/LoginPage";
 import MessagesPage from "@/pages/admin/MessagesPage";
+import ProcessPage from "@/pages/admin/ProcessPage";
+import ProjectsPage from "@/pages/admin/ProjectsPage";
+import Contact from "@/pages/Contact";
+import Home from "@/pages/Home";
+import Process from "@/pages/Process";
+import Work from "@/pages/Work";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { AnimatePresence, motion } from "motion/react";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 
 function AnimatedRoutes() {
   const location = useLocation();
 
   return (
+    // Transition effect on navigation
     <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
