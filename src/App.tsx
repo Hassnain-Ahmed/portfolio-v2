@@ -16,6 +16,7 @@ import Home from "@/pages/Home";
 import Process from "@/pages/Process";
 import Work from "@/pages/Work";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { Analytics } from "@vercel/analytics/react";
 import { AnimatePresence, motion } from "motion/react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 
@@ -66,6 +67,7 @@ export default function App() {
           </Routes>
         </BrowserRouter>
       </AuthProvider>
+      <Analytics />
     </QueryClientProvider>
   );
 }
