@@ -125,43 +125,39 @@ export default function Hero() {
           </h1>
         </div>
 
-        {splineLoaded && (
-          <p
-            ref={subtitleRef}
-            className="mt-6 max-w-md text-base font-medium leading-relaxed tracking-wide text-white/70 opacity-0 md:text-lg"
-          >
-            I craft{" "}
-            <Highlighter color="rgba(26, 26, 26, 0.2)" action="highlight" animationDuration={800} padding={4}>
-              digital experiences
-            </Highlighter>{" "}
-            at the intersection of{" "}
-            <Highlighter color="rgba(139,92,246,0.45)" action="underline" animationDuration={600} strokeWidth={2}>
-              design
-            </Highlighter>{" "}
-            and{" "}
-            <Highlighter color="rgba(139,92,246,0.45)" action="underline" animationDuration={600} strokeWidth={2}>
-              engineering
-            </Highlighter>
-            .
-          </p>
-        )}
+        <p
+          ref={subtitleRef}
+          className="mt-6 max-w-md text-base font-medium leading-relaxed tracking-wide text-white/70 opacity-0 md:text-lg"
+        >
+          I craft{" "}
+          <Highlighter color="rgba(26, 26, 26, 0.2)" action="highlight" animationDuration={800} padding={4}>
+            digital experiences
+          </Highlighter>{" "}
+          at the intersection of{" "}
+          <Highlighter color="rgba(139,92,246,0.45)" action="underline" animationDuration={600} strokeWidth={2}>
+            design
+          </Highlighter>{" "}
+          and{" "}
+          <Highlighter color="rgba(139,92,246,0.45)" action="underline" animationDuration={600} strokeWidth={2}>
+            engineering
+          </Highlighter>
+          .
+        </p>
 
-        {splineLoaded && (
-          <div ref={ctaRef} className="mt-10 flex gap-4 opacity-0">
-            <Link
-              to="/work"
-              className="pointer-events-auto rounded-full bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
-            >
-              My Work
-            </Link>
-            <Link
-              to="/contact"
-              className="pointer-events-auto rounded-full border border-white/50 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white/20"
-            >
-              Get in Touch
-            </Link>
-          </div>
-        )}
+        <div ref={ctaRef} className="mt-10 flex gap-4 opacity-0">
+          <Link
+            to="/work"
+            className="pointer-events-auto rounded-full bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+          >
+            My Work
+          </Link>
+          <Link
+            to="/contact"
+            className="pointer-events-auto rounded-full border border-white/50 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white/20"
+          >
+            Get in Touch
+          </Link>
+        </div>
       </div>
 
       {/* <ScrollIndicator /> */}
