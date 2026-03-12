@@ -2,19 +2,21 @@ import { WavyBackground } from "@/components/ui/wavy-background";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import CodeEditorShell from "./CodeEditorShell";
+import { useProjects } from "@/hooks/useProjects";
 
 export default function WorkSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const { isLoading } = useProjects();
 
   return (
     <section
       id="work"
       ref={sectionRef}
-      className="relative bg-neutral-50"
+      className={`relative bg-neutral-50 ${isLoading ? "min-h-dvh" : ""}`}
     >
       <WavyBackground
-        containerClassName="py-24"
+        containerClassName={isLoading ? "py-24 min-h-dvh" : "py-24"}
         className="mx-auto max-w-6xl px-6 w-full"
         backgroundFill="#fafafa"
         colors={["#f9a8d4", "#c4b5fd", "#93c5fd", "#fda4af", "#d8b4fe"]}
