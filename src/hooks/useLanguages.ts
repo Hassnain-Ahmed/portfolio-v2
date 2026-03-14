@@ -17,6 +17,7 @@ export function useLanguages() {
         name: row.name as string,
         percentage: row.percentage as number,
         color: row.color as string,
+        icon_url: (row.icon_url as string) ?? "",
       }));
     },
   });

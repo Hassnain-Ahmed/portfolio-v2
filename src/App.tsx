@@ -5,6 +5,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { queryClient } from "@/lib/queryClient";
 import About from "@/pages/About";
 import AboutPage from "@/pages/admin/AboutPage";
+import LanguagesPage from "@/pages/admin/LanguagesPage";
 import ContactAdminPage from "@/pages/admin/ContactPage";
 import DashboardPage from "@/pages/admin/DashboardPage";
 import LoginPage from "@/pages/admin/LoginPage";
@@ -61,6 +62,7 @@ export default function App() {
               <Route path="projects" element={<ProjectsPage />} />
               <Route path="process" element={<ProcessPage />} />
               <Route path="about" element={<AboutPage />} />
+              <Route path="languages" element={<LanguagesPage />} />
               <Route path="messages" element={<MessagesPage />} />
               <Route path="contact" element={<ContactAdminPage />} />
             </Route>

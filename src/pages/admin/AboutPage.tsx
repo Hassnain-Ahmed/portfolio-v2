@@ -1,7 +1,7 @@
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import ImageUpload from "@/components/admin/ImageUpload";
 import { useProfile } from "@/hooks/useProfile";
-import { useLanguages } from "@/hooks/useLanguages";
+
 import { supabase } from "@/lib/supabase";
 import { queryClient } from "@/lib/queryClient";
 import { Pencil, Plus, Trash2, X } from "lucide-react";
@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 
 export default function AboutPage() {
   const { data } = useProfile();
-  const { data: languages } = useLanguages();
 
   return (
     <div className="space-y-10">
@@ -17,7 +16,6 @@ export default function AboutPage() {
       <ProfileSection profile={data?.profile} />
       <ExperienceSection experience={data?.experience ?? []} />
       <SkillsSection skills={data?.skills ?? []} />
-      <LanguagesSection languages={languages ?? []} />
     </div>
   );
 }
@@ -208,101 +206,6 @@ function SkillsSection({ skills }: { skills: string[] }) {
           {saving ? "..." : "Add"}
         </button>
       </div>
-    </div>
-  );
-}
-
-// --- Languages Section ---
-function LanguagesSection({ languages }: { languages: { name: string; percentage: number; color: string }[] }) {
-  const [items, setItems] = useState<{ id?: string; name: string; percentage: number; color: string; sort_order: number }[]>([]);
-  const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    supabase.from("languages").select("*").order("sort_order").then(({ data }) => {
-      setItems((data ?? []).map(r => ({ id: r.id, name: r.name, percentage: r.percentage, color: r.color, sort_order: r.sort_order })));
-    });
-  }, [languages]);
-
-  const add = () => {
-    setItems([...items, { name: "", percentage: 0, color: "#9CA3AF", sort_order: items.length }]);
-  };
-
-  const update = (i: number, key: string, value: string | number) => {
-    const updated = [...items];
-    updated[i] = { ...updated[i], [key]: value };
-    setItems(updated);
-  };
-
-  const remove = async (i: number) => {
-    const item = items[i];
-    if (item.id) {
-      await supabase.from("languages").delete().eq("id", item.id);
-    }
-    setItems(items.filter((_, idx) => idx !== i));
-    await queryClient.invalidateQueries({ queryKey: ["languages"] });
-  };
-
-  const saveAll = async () => {
-    setSaving(true);
-    await supabase.from("languages").delete().neq("id", "00000000-0000-0000-0000-000000000000");
-    const rows = items.map((item, i) => ({
-      name: item.name,
-      percentage: item.percentage,
-      color: item.color,
-      sort_order: i,
-    }));
-    if (rows.length > 0) {
-      await supabase.from("languages").insert(rows);
-    }
-    await queryClient.invalidateQueries({ queryKey: ["languages"] });
-    const { data } = await supabase.from("languages").select("*").order("sort_order");
-    setItems((data ?? []).map(r => ({ id: r.id, name: r.name, percentage: r.percentage, color: r.color, sort_order: r.sort_order })));
-    setSaving(false);
-  };
-
-  return (
-    <div>
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-white">Languages</h2>
-        <button onClick={add} className="flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700">
-          <Plus size={16} /> Add
-        </button>
-      </div>
-      <div className="mt-4 space-y-3">
-        {items.map((lang, i) => (
-          <div key={i} className="flex flex-wrap items-center gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 sm:flex-nowrap">
-            <input
-              type="color"
-              value={lang.color}
-              onChange={e => update(i, "color", e.target.value)}
-              className="h-8 w-8 shrink-0 cursor-pointer rounded border-0 bg-transparent"
-            />
-            <input
-              value={lang.name}
-              onChange={e => update(i, "name", e.target.value)}
-              placeholder="Language name"
-              className="min-w-0 flex-1 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-gray-100 outline-none placeholder:text-gray-500 focus:border-purple-500"
-            />
-            <div className="flex items-center gap-1">
-              <input
-                type="number"
-                min={0}
-                max={100}
-                value={lang.percentage}
-                onChange={e => update(i, "percentage", parseInt(e.target.value) || 0)}
-                className="w-16 rounded-lg border border-gray-700 bg-gray-800 px-2 py-2 text-sm text-center text-gray-100 outline-none focus:border-purple-500"
-              />
-              <span className="text-sm text-gray-500">%</span>
-            </div>
-            <button onClick={() => remove(i)} className="shrink-0 rounded-lg p-2 text-gray-400 hover:bg-red-500/15 hover:text-red-400"><Trash2 size={16} /></button>
-          </div>
-        ))}
-      </div>
-      {items.length > 0 && (
-        <button onClick={saveAll} disabled={saving} className="mt-4 rounded-lg bg-purple-600 px-6 py-2 text-sm font-medium text-white hover:bg-purple-700 disabled:opacity-50">
-          {saving ? "Saving..." : "Save Languages"}
-        </button>
-      )}
     </div>
   );
 }

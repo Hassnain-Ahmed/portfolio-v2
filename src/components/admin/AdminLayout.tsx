@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
-import { LayoutDashboard, Briefcase, Settings, User, LogOut, MessageSquare, Mail, Menu, X } from "lucide-react";
+import { LayoutDashboard, Briefcase, Settings, User, LogOut, MessageSquare, Mail, Menu, X, Languages } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useState } from "react";
 
@@ -8,6 +8,7 @@ const NAV = [
   { to: "/admin/projects", icon: Briefcase, label: "Projects", end: false },
   { to: "/admin/process", icon: Settings, label: "Process", end: false },
   { to: "/admin/about", icon: User, label: "About", end: false },
+  { to: "/admin/languages", icon: Languages, label: "Languages", end: false },
   { to: "/admin/messages", icon: Mail, label: "Messages", end: false },
   { to: "/admin/contact", icon: MessageSquare, label: "Contact", end: false },
 ];

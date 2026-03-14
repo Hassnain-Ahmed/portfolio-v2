@@ -77,7 +77,9 @@ async function fetchGitHubData(): Promise<GitHubData | null> {
     const contribData = await contribRes.json();
     totalContributions = contribData.total?.lastYear ?? 0;
 
-    const days: { date: string; count: number }[] = contribData.contributions ?? [];
+    const allDays: { date: string; count: number }[] = contribData.contributions ?? [];
+    const currentYear = new Date().getFullYear();
+    const days = allDays.filter((d) => new Date(d.date).getFullYear() >= currentYear);
     const weeks: ContributionDay[][] = [];
     let week: ContributionDay[] = [];
     for (const day of days) {
@@ -88,7 +90,7 @@ async function fetchGitHubData(): Promise<GitHubData | null> {
       }
     }
     if (week.length > 0) weeks.push(week);
-    contributions = weeks.slice(-52);
+    contributions = weeks;
   }
 
   const totalCommits = totalContributions || profile.public_repos * 15;

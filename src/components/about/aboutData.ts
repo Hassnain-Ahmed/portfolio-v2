@@ -14,6 +14,7 @@ export interface Language {
   name: string;
   percentage: number;
   color: string;
+  icon_url?: string;
 }
 
 export interface Stat {

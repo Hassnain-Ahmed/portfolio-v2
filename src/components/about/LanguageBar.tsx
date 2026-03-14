@@ -6,11 +6,18 @@ import { defaultLanguages } from "./aboutData";
 
 export default function LanguageBar() {
   const { data } = useGitHub();
-  const { data: dbLanguages } = useLanguages();
-  const languages = data?.languages ?? dbLanguages ?? defaultLanguages;
+  const { data: dbLanguages, isLoading: dbLoading } = useLanguages();
+  // DB (admin) takes priority; GitHub API is fallback; show nothing until DB finishes loading
+  const languages = dbLoading
+    ? null
+    : dbLanguages && dbLanguages.length > 0
+      ? dbLanguages
+      : data?.languages ?? defaultLanguages;
 
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  if (!languages) return <div ref={ref} />;
 
   return (
     <div ref={ref} className="flex h-full flex-col gap-3 md:flex-row md:items-stretch">
@@ -52,17 +59,40 @@ export default function LanguageBar() {
 
       {/* Legend */}
       <div className="flex flex-wrap gap-x-3 gap-y-1 md:flex-col md:justify-center md:gap-1.5">
-        {languages.map((lang) => (
-          <div key={lang.name} className="flex items-center gap-1.5">
+        {languages.map((lang, i) => (
+          <motion.div
+            key={lang.name}
+            className="flex items-center gap-1.5"
+            initial={{ opacity: 0, x: -10 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+            transition={{
+              delay: 0.4 + i * 0.1,
+              duration: 0.5,
+              ease: [0.25, 1, 0.5, 1],
+            }}
+          >
+            {lang.icon_url ? (
+              <img
+                src={lang.icon_url}
+                alt={lang.name}
+                className="h-3.5 w-3.5 shrink-0 object-contain"
+              />
+            ) : (
+              <span
+                className="h-2 w-2 shrink-0 rounded-full"
+                style={{ backgroundColor: lang.color }}
+              />
+            )}
             <span
-              className="h-2 w-2 shrink-0 rounded-full"
+              className="rounded px-1 py-0.5 text-[10px] font-medium text-white"
               style={{ backgroundColor: lang.color }}
-            />
-            <span className="text-[10px] text-neutral-600">{lang.name}</span>
+            >
+              {lang.name}
+            </span>
             <span className="font-mono text-[10px] text-neutral-400">
               {lang.percentage}%
             </span>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
