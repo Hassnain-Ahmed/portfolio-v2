@@ -70,7 +70,7 @@ export const collectionPageJsonLd = {
       name: "Portfolio 2.0",
       description:
         "Personal portfolio site with 3D Spline scenes, GSAP animations, and a Supabase-powered admin panel.",
-      url: "https://hassnain.online",
+      url: SITE_URL,
       author: { "@type": "Person", name: "Hassnain Ahmed" },
       programmingLanguage: ["TypeScript", "React"],
     },
