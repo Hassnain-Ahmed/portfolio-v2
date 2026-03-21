@@ -1,18 +1,21 @@
 import { useProjects } from "@/hooks/useProjects";
 import { useProcessSteps } from "@/hooks/useProcessSteps";
 import { useProfile } from "@/hooks/useProfile";
-import { Briefcase, Settings, User, Wrench } from "lucide-react";
+import { useTestimonials } from "@/hooks/useTestimonials";
+import { Briefcase, Quote, Settings, User, Wrench } from "lucide-react";
 
 export default function DashboardPage() {
   const { data: projects } = useProjects();
   const { data: process } = useProcessSteps();
   const { data: profile } = useProfile();
+  const { data: testimonials } = useTestimonials();
 
   const cards = [
     { icon: Briefcase, label: "Projects", value: projects?.length ?? 0 },
     { icon: Settings, label: "Process Steps", value: process?.nodes.length ?? 0 },
     { icon: User, label: "Experience", value: profile?.experience.length ?? 0 },
     { icon: Wrench, label: "Skills", value: profile?.skills.length ?? 0 },
+    { icon: Quote, label: "Testimonials", value: testimonials?.length ?? 0 },
   ];
 
   return (

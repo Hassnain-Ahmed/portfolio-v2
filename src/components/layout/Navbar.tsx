@@ -109,6 +109,7 @@ const NAV_ITEMS = [
   { icon: `${ICON_BASE}/person-male.png`, label: "About", href: "/about", bg: "linear-gradient(135deg, #34D399, #059669)" },
   { icon: `${ICON_BASE}/gear.png`, label: "Process", href: "/process", bg: "linear-gradient(135deg, #9CA3AF, #4B5563)" },
   { icon: `${ICON_BASE}/mail.png`, label: "Contact", href: "/contact", bg: "linear-gradient(135deg, #60A5FA, #2563EB)" },
+  { icon: `${ICON_BASE}/quote-left.png`, label: "Testimonials", href: "/testimonials", bg: "linear-gradient(135deg, #F472B6, #DB2777)" },
   { icon: `${ICON_BASE}/github.png`, label: "GitHub", href: "https://github.com/Hassnain-Ahmed", bg: "linear-gradient(135deg, #374151, #111827)" },
   { icon: `${ICON_BASE}/linkedin.png`, label: "LinkedIn", href: "https://www.linkedin.com/in/hasnain-ahmed-869741291", bg: "linear-gradient(135deg, #38BDF8, #0A66C2)" },
 ];

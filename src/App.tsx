@@ -12,9 +12,11 @@ import LoginPage from "@/pages/admin/LoginPage";
 import MessagesPage from "@/pages/admin/MessagesPage";
 import ProcessPage from "@/pages/admin/ProcessPage";
 import ProjectsPage from "@/pages/admin/ProjectsPage";
+import TestimonialsAdminPage from "@/pages/admin/TestimonialsPage";
 import Contact from "@/pages/Contact";
 import Home from "@/pages/Home";
 import Process from "@/pages/Process";
+import Testimonials from "@/pages/Testimonials";
 import Work from "@/pages/Work";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Analytics } from "@vercel/analytics/react";
@@ -40,6 +42,7 @@ function AnimatedRoutes() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/process" element={<Process />} />
+          <Route path="/testimonials" element={<Testimonials />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -63,6 +66,7 @@ export default function App() {
               <Route path="process" element={<ProcessPage />} />
               <Route path="about" element={<AboutPage />} />
               <Route path="languages" element={<LanguagesPage />} />
+              <Route path="testimonials" element={<TestimonialsAdminPage />} />
               <Route path="messages" element={<MessagesPage />} />
               <Route path="contact" element={<ContactAdminPage />} />
             </Route>
