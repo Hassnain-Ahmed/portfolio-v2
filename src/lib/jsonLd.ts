@@ -1,3 +1,4 @@
+import type { Testimonial } from "@/hooks/useTestimonials";
 import { SITE_URL } from "./seo";
 
 const KNOWS_ABOUT = [
@@ -167,3 +168,46 @@ export const contactPageJsonLd = {
     },
   },
 };
+
+export function testimonialsJsonLd(testimonials: Testimonial[]) {
+  if (!testimonials.length) return null;
+
+  const avg =
+    testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Testimonials — Hassnain Ahmed",
+    url: `${SITE_URL}/testimonials`,
+    mainEntity: {
+      "@type": "Person",
+      name: "Hassnain Ahmed",
+      url: SITE_URL,
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: avg.toFixed(1),
+        bestRating: "5",
+        worstRating: "1",
+        ratingCount: testimonials.length,
+      },
+    },
+    review: testimonials.map((t) => ({
+      "@type": "Review",
+      author: {
+        "@type": "Person",
+        name: t.name,
+        ...(t.company && {
+          worksFor: { "@type": "Organization", name: t.company },
+        }),
+      },
+      reviewBody: t.content,
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: t.rating,
+        bestRating: 5,
+        worstRating: 1,
+      },
+    })),
+  };
+}

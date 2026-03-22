@@ -250,6 +250,7 @@ function SubmitSection({ lineStart }: { lineStart: number }) {
               <button
                 key={s}
                 type="button"
+                aria-label={`Rate ${s + 1} out of 5 stars`}
                 onClick={() => setForm((p) => ({ ...p, rating: s + 1 }))}
                 className="cursor-pointer transition-colors"
               >
@@ -350,9 +351,9 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
           className="mb-10 md:mb-14"
         >
-          <h2 className="font-sans text-3xl font-semibold text-neutral-900 md:text-5xl">
+          <h1 className="font-sans text-3xl font-semibold text-neutral-900 md:text-5xl">
             Testimonials
-          </h2>
+          </h1>
           <p className="mt-1.5 max-w-lg text-xs font-sans leading-relaxed text-neutral-600 md:mt-2 md:text-sm">
             Kind words from clients and collaborators I&apos;ve had the pleasure
             of working with.
