@@ -2,9 +2,10 @@ import { Download, Eye, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
 
-const RESUME_URL = "/resume.pdf";
+const FALLBACK_RESUME = "/resume.pdf";
 
-export default function ResumeModal() {
+export default function ResumeModal({ resumeUrl }: { resumeUrl?: string }) {
+  const url = resumeUrl || FALLBACK_RESUME;
   const [open, setOpen] = useState(false);
 
   const close = useCallback(() => setOpen(false), []);
@@ -30,7 +31,7 @@ export default function ResumeModal() {
           View
         </button>
         <a
-          href={RESUME_URL}
+          href={url}
           download
           className="flex items-center justify-center gap-2 rounded-xl bg-purple-600 p-3 font-mono text-xs font-medium text-white shadow-lg shadow-purple-500/25 transition-all hover:bg-purple-700 hover:shadow-purple-500/35 active:scale-[0.97]"
         >
@@ -73,7 +74,7 @@ export default function ResumeModal() {
                 </span>
                 <div className="flex items-center gap-2">
                   <a
-                    href={RESUME_URL}
+                    href={url}
                     download
                     className="rounded-lg bg-purple-600 px-3 py-1.5 font-mono text-xs font-medium text-white transition-colors hover:bg-purple-700"
                   >
@@ -92,7 +93,7 @@ export default function ResumeModal() {
               {/* PDF embed */}
               <div className="flex-1 bg-neutral-100">
                 <iframe
-                  src={RESUME_URL}
+                  src={url}
                   title="Resume"
                   className="h-full w-full"
                 />

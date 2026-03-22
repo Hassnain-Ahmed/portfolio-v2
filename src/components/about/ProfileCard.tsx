@@ -14,6 +14,7 @@ export default function ProfileCard({ profile: profileData, skills = [] }: Profi
   const fallback: ProfileInfo = {
     name: "", handle: "", title: "", bio: "", avatar: "",
     location: "", email: "", status: { emoji: "", text: "" }, highlights: [],
+    resume_url: "",
   };
   const profile = profileData ?? fallback;
 

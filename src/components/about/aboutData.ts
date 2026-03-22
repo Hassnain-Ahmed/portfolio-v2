@@ -8,6 +8,7 @@ export interface ProfileInfo {
   email: string;
   status: { emoji: string; text: string };
   highlights: string[];
+  resume_url: string;
 }
 
 export interface Language {

@@ -31,6 +31,7 @@ export function useProfile() {
         email: p.email ?? "",
         status: { emoji: p.status_emoji ?? "", text: p.status_text ?? "" },
         highlights: p.highlights ?? [],
+        resume_url: (p.resume_url as string) ?? "",
       };
 
       const experience: Experience[] = (expRes.data ?? []).map((e) => ({

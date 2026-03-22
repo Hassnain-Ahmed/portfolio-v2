@@ -94,7 +94,7 @@ export default function AboutSection() {
                     profile={profileData?.profile}
                     skills={profileData?.skills}
                   />
-                  <ResumeModal />
+                  <ResumeModal resumeUrl={profileData?.profile.resume_url} />
                 </motion.div>
 
                 {/* Main — bento grid */}

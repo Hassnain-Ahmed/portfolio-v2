@@ -4,8 +4,8 @@ import { useProfile } from "@/hooks/useProfile";
 
 import { supabase } from "@/lib/supabase";
 import { queryClient } from "@/lib/queryClient";
-import { Pencil, Plus, Trash2, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { FileText, Pencil, Plus, Trash2, Upload, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function AboutPage() {
   const { data } = useProfile();
@@ -25,7 +25,7 @@ function ProfileSection({ profile }: { profile?: ReturnType<typeof useProfile>["
   const [form, setForm] = useState({
     name: "", handle: "", title: "", bio: "", avatar_url: "",
     location: "", email: "", status_emoji: "", status_text: "",
-    highlights: [] as string[],
+    highlights: [] as string[], resume_url: "",
   });
   const [highlightInput, setHighlightInput] = useState("");
   const [saving, setSaving] = useState(false);
@@ -38,7 +38,7 @@ function ProfileSection({ profile }: { profile?: ReturnType<typeof useProfile>["
       name: profile.name, handle: profile.handle, title: profile.title, bio: profile.bio,
       avatar_url: profile.avatar, location: profile.location, email: profile.email,
       status_emoji: profile.status.emoji, status_text: profile.status.text,
-      highlights: profile.highlights,
+      highlights: profile.highlights, resume_url: profile.resume_url,
     });
     setHighlightInput(profile.highlights.join(", "));
   }, [profile]);
@@ -72,6 +72,7 @@ function ProfileSection({ profile }: { profile?: ReturnType<typeof useProfile>["
           <label className="text-sm font-medium text-gray-300">Avatar</label>
           <ImageUpload folder="about" value={form.avatar_url} onChange={v => setForm({ ...form, avatar_url: v })} />
         </div>
+        <ResumeUpload value={form.resume_url} onChange={v => setForm({ ...form, resume_url: v })} />
         <button onClick={save} disabled={saving} className="rounded-lg bg-purple-600 px-6 py-2 text-sm font-medium text-white hover:bg-purple-700 disabled:opacity-50">
           {saving ? "Saving..." : "Save Profile"}
         </button>
@@ -206,6 +207,56 @@ function SkillsSection({ skills }: { skills: string[] }) {
           {saving ? "..." : "Add"}
         </button>
       </div>
+    </div>
+  );
+}
+
+// --- Resume Upload ---
+function ResumeUpload({ value, onChange }: { value: string; onChange: (url: string) => void }) {
+  const [uploading, setUploading] = useState(false);
+
+  const handleUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const path = `resume/${Date.now()}-${safeName}`;
+
+    const { error } = await supabase.storage
+      .from("portfolio-images")
+      .upload(path, file, { upsert: true });
+
+    if (!error) {
+      const { data } = supabase.storage
+        .from("portfolio-images")
+        .getPublicUrl(path);
+      onChange(data.publicUrl);
+    }
+    setUploading(false);
+  }, [onChange]);
+
+  const fileName = value ? decodeURIComponent(value.split("/").pop() ?? "") : "";
+
+  return (
+    <div className="space-y-1">
+      <label className="text-sm font-medium text-gray-300">Resume (PDF)</label>
+      {value && (
+        <div className="flex items-center gap-3 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2">
+          <FileText size={16} className="shrink-0 text-purple-400" />
+          <a href={value} target="_blank" rel="noopener noreferrer" className="min-w-0 truncate text-sm text-purple-400 hover:underline">
+            {fileName}
+          </a>
+          <button type="button" onClick={() => onChange("")} className="ml-auto shrink-0 text-gray-500 hover:text-red-400">
+            <X size={14} />
+          </button>
+        </div>
+      )}
+      <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-dashed border-gray-600 px-4 py-3 text-sm text-gray-400 transition-colors hover:border-purple-400 hover:text-purple-400">
+        <Upload size={16} />
+        {uploading ? "Uploading..." : value ? "Replace resume" : "Upload resume"}
+        <input type="file" accept=".pdf" className="hidden" onChange={handleUpload} disabled={uploading} />
+      </label>
     </div>
   );
 }
