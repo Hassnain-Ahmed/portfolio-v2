@@ -8,6 +8,7 @@ export interface Project {
   techStack: string[];
   url: string;
   year: string;
+  hidden: boolean;
 }
 
 /**

@@ -5,7 +5,7 @@ import { getProjectsByFolder } from "@/components/work/projects";
 import { useProjects } from "@/hooks/useProjects";
 import { supabase } from "@/lib/supabase";
 import { queryClient } from "@/lib/queryClient";
-import { FolderPlus, Pencil, Plus, Trash2, X } from "lucide-react";
+import { Eye, EyeOff, FolderPlus, Pencil, Plus, Trash2, X } from "lucide-react";
 import { useMemo, useState } from "react";
 
 interface ProjectForm {
@@ -19,15 +19,16 @@ interface ProjectForm {
   url: string;
   year: string;
   sort_order: number;
+  hidden: boolean;
 }
 
 const EMPTY: ProjectForm = {
   title: "", file_name: "", folder: "Websites", description: "",
-  image_url: "", tech_stack: [], url: "", year: "", sort_order: 0,
+  image_url: "", tech_stack: [], url: "", year: "", sort_order: 0, hidden: false,
 };
 
 export default function ProjectsPage() {
-  const { data: projects = [] } = useProjects();
+  const { data: projects = [] } = useProjects({ includeHidden: true });
   const [editing, setEditing] = useState<ProjectForm | null>(null);
   const [saving, setSaving] = useState(false);
   const [techInput, setTechInput] = useState("");
@@ -45,7 +46,7 @@ export default function ProjectsPage() {
     setEditing({
       id: p.id, title: p.title, file_name: p.fileName, folder: p.folder,
       description: p.description, image_url: p.image, tech_stack: p.techStack,
-      url: p.url, year: p.year, sort_order: 0,
+      url: p.url, year: p.year, sort_order: 0, hidden: p.hidden,
     });
     setTechInput(p.techStack.join(", "));
     setIsCustomFolder(isCustom);
@@ -73,6 +74,11 @@ export default function ProjectsPage() {
     await supabase.from("projects").delete().eq("id", deleteTarget.id);
     await queryClient.invalidateQueries({ queryKey: ["projects"] });
     setDeleteTarget(null);
+  };
+
+  const toggleHidden = async (id: string, hidden: boolean) => {
+    await supabase.from("projects").update({ hidden: !hidden }).eq("id", id);
+    await queryClient.invalidateQueries({ queryKey: ["projects"] });
   };
 
   const grouped = useMemo(() => getProjectsByFolder(projects), [projects]);
@@ -248,12 +254,15 @@ export default function ProjectsPage() {
               </div>
               <div className="space-y-3">
                 <SortableList items={folderProjects} getId={p => p.id} onReorder={reordered => reorderWithinFolder(folder, reordered)} renderItem={(p, _i, dragHandle) => (
-                  <div className="flex items-center gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4">
+                  <div className={`flex items-center gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 ${p.hidden ? "opacity-50" : ""}`}>
                     <DragHandle dragHandle={dragHandle} />
                     <div className="flex min-w-0 flex-1 items-center gap-4">
                       {p.image && <img src={p.image} alt="" className="h-12 w-12 shrink-0 rounded-lg object-cover" />}
                       <div className="min-w-0">
-                        <p className="font-medium text-white truncate">{p.title}</p>
+                        <p className="font-medium text-white truncate">
+                          {p.title}
+                          {p.hidden && <span className="ml-2 rounded bg-gray-800 px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-gray-400">Hidden</span>}
+                        </p>
                         <p className="text-xs text-gray-500">{p.year}</p>
                       </div>
                     </div>
@@ -269,6 +278,13 @@ export default function ProjectsPage() {
                           ))}
                         </select>
                       )}
+                      <button
+                        onClick={() => toggleHidden(p.id, p.hidden)}
+                        title={p.hidden ? "Unhide project" : "Hide project"}
+                        className="rounded-lg p-2 text-gray-400 hover:bg-gray-700 hover:text-gray-200"
+                      >
+                        {p.hidden ? <EyeOff size={16} /> : <Eye size={16} />}
+                      </button>
                       <button onClick={() => openEdit(p)} className="rounded-lg p-2 text-gray-400 hover:bg-gray-700 hover:text-gray-200"><Pencil size={16} /></button>
                       <button onClick={() => setDeleteTarget({ id: p.id, title: p.title })} className="rounded-lg p-2 text-gray-400 hover:bg-red-500/15 hover:text-red-400"><Trash2 size={16} /></button>
                     </div>

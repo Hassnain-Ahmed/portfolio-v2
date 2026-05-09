@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import type { Project } from "@/components/work/projects";
 
-export function useProjects() {
+export function useProjects({ includeHidden = false }: { includeHidden?: boolean } = {}) {
   return useQuery({
     queryKey: ["projects"],
     queryFn: async (): Promise<Project[]> => {
@@ -23,7 +23,9 @@ export function useProjects() {
         techStack: row.tech_stack ?? [],
         url: row.url ?? "",
         year: row.year ?? "",
+        hidden: row.hidden ?? false,
       }));
     },
+    select: (data) => (includeHidden ? data : data.filter((p) => !p.hidden)),
   });
 }
