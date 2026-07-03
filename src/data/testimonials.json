@@ -1,5 +1,17 @@
 [
   {
+    "id": "11f00efd-0e2a-426c-866b-45cea304ab6b",
+    "name": "Fatima Raza",
+    "role": "Creative Director",
+    "company": "Freelance",
+    "content": "I needed a portfolio that would actually showcase my graphic design work the way it deserves. Hassnain delivered a stunning site with custom animations and Framer Motion transitions that make my work pop. Highly recommend.",
+    "avatar_url": "",
+    "rating": 5,
+    "featured": false,
+    "approved": true,
+    "sort_order": 1
+  },
+  {
     "id": "c763a99a-c28d-424f-b146-386c3a00d65c",
     "name": "James Whitfield",
     "role": "Operations Manager",
@@ -9,16 +21,16 @@
     "rating": 5,
     "featured": true,
     "approved": true,
-    "sort_order": 2
+    "sort_order": 1
   },
   {
-    "id": "11f00efd-0e2a-426c-866b-45cea304ab6b",
-    "name": "Fatima Raza",
-    "role": "Creative Director",
-    "company": "Freelance",
-    "content": "I needed a portfolio that would actually showcase my graphic design work the way it deserves. Hassnain delivered a stunning site with custom animations and Framer Motion transitions that make my work pop. Highly recommend.",
+    "id": "e1e5f7f6-8384-400f-ae54-c6fe3598275a",
+    "name": "Sumera Shaikh",
+    "role": "Owner",
+    "company": "Unique Girls Hostel",
+    "content": "Hassnain built a professional website for our hostel that looks modern and works perfectly on mobile. He was patient with our feedback, made every change we asked for, and the final result helped us get more bookings online.",
     "avatar_url": "",
-    "rating": 5,
+    "rating": 4,
     "featured": false,
     "approved": true,
     "sort_order": 3
@@ -34,17 +46,5 @@
     "featured": true,
     "approved": true,
     "sort_order": 4
-  },
-  {
-    "id": "e1e5f7f6-8384-400f-ae54-c6fe3598275a",
-    "name": "Sana Javed",
-    "role": "Owner",
-    "company": "Unique Girls Hostel",
-    "content": "Hassnain built a professional website for our hostel that looks modern and works perfectly on mobile. He was patient with our feedback, made every change we asked for, and the final result helped us get more bookings online.",
-    "avatar_url": "",
-    "rating": 4,
-    "featured": false,
-    "approved": true,
-    "sort_order": 5
   }
 ]
