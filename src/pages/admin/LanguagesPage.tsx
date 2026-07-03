@@ -21,22 +21,17 @@ export default function LanguagesPage() {
   const [deleteTarget, setDeleteTarget] = useState<number | null>(null);
 
   useEffect(() => {
-    supabase
-      .from("languages")
-      .select("*")
-      .order("sort_order")
-      .then(({ data }) => {
-        setItems(
-          (data ?? []).map((r) => ({
-            id: r.id,
-            name: r.name,
-            percentage: r.percentage,
-            color: r.color,
-            icon_url: r.icon_url ?? "",
-            sort_order: r.sort_order,
-          }))
-        );
-      });
+    if (!languages) return;
+    setItems(
+      languages.map((r, i) => ({
+        id: r.id,
+        name: r.name,
+        percentage: r.percentage,
+        color: r.color,
+        icon_url: r.icon_url ?? "",
+        sort_order: r.sort_order ?? i,
+      }))
+    );
   }, [languages]);
 
   const add = () => {
@@ -110,21 +105,9 @@ export default function LanguagesPage() {
       }
     }
 
+    // Refetch via the shared query; the useEffect above re-syncs local items
+    // (including fresh row ids) once the invalidated query resolves.
     await queryClient.invalidateQueries({ queryKey: ["languages"] });
-    const { data } = await supabase
-      .from("languages")
-      .select("*")
-      .order("sort_order");
-    setItems(
-      (data ?? []).map((r) => ({
-        id: r.id,
-        name: r.name,
-        percentage: r.percentage,
-        color: r.color,
-        icon_url: r.icon_url ?? "",
-        sort_order: r.sort_order,
-      }))
-    );
     setSaving(false);
   };
 

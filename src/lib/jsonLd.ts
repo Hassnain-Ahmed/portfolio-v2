@@ -2,12 +2,15 @@ import type { Testimonial } from "@/hooks/useTestimonials";
 import { SITE_URL } from "./seo";
 
 const KNOWS_ABOUT = [
+  "Full-Stack Development",
+  "Artificial Intelligence",
+  "SaaS",
+  "LLM Applications",
   "React",
   "TypeScript",
   "Next.js",
   "Node.js",
-  "UI/UX Design",
-  "3D Web Experiences",
+  "REST APIs",
   "Frontend Architecture",
   "Tailwind CSS",
   "Supabase",
@@ -19,9 +22,9 @@ export const personJsonLd = {
   "@type": "Person",
   name: "Hassnain Ahmed",
   url: SITE_URL,
-  jobTitle: "Design Engineer & Creative Developer",
+  jobTitle: "Full-Stack Developer",
   description:
-    "Design engineer and creative developer crafting immersive digital experiences with modern web technologies.",
+    "Full-stack developer building and shipping AI-powered products and SaaS end to end — frontend, backend, and everything between.",
   image: `${SITE_URL}/og/default.png`,
   address: {
     "@type": "PostalAddress",
@@ -35,13 +38,13 @@ export const personJsonLd = {
   knowsAbout: KNOWS_ABOUT,
   hasOccupation: {
     "@type": "Occupation",
-    name: "Design Engineer",
+    name: "Full-Stack Developer",
     occupationLocation: {
       "@type": "Country",
       name: "Pakistan",
     },
     skills:
-      "React, TypeScript, UI/UX Design, 3D Web, Frontend Architecture, Tailwind CSS, Node.js",
+      "Full-Stack Development, AI, SaaS, React, TypeScript, Node.js, PostgreSQL, REST APIs, Frontend Architecture",
   },
 };
 
@@ -51,7 +54,7 @@ export const webSiteJsonLd = {
   name: "Hassnain Ahmed",
   url: SITE_URL,
   description:
-    "Portfolio of Hassnain Ahmed, design engineer and creative developer.",
+    "Portfolio of Hassnain Ahmed, full-stack developer shipping AI & SaaS products.",
 };
 
 export const collectionPageJsonLd = {

@@ -1,5 +1,5 @@
 import { WarpBackground } from "@/components/ui/warp-background";
-import { useProfile } from "@/hooks/useProfile";
+import { profile, experience, skills } from "@/data";
 import { motion, useInView } from "motion/react";
 import { useMemo, useRef } from "react";
 import ContributionGraph from "./ContributionGraph";
@@ -17,7 +17,6 @@ export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const github = useGitHubData();
-  const { data: profileData, isLoading: profileLoading } = useProfile();
 
   const stats: Stat[] = useMemo(() => [
     {
@@ -52,11 +51,6 @@ export default function AboutSection() {
           gridColor="rgba(0, 0, 0, 0.1)"
         >
           <div className="mx-auto w-full max-w-6xl px-4 pt-20 pb-10 md:px-6 md:pt-16 md:pb-16">
-            {github.loading || profileLoading ? (
-              <div className="flex min-h-[60vh] items-center justify-center">
-                <div className="h-6 w-6 animate-spin rounded-full border-2 border-neutral-300 border-t-purple-500" />
-              </div>
-            ) : (
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -91,10 +85,10 @@ export default function AboutSection() {
                   transition={{ delay: 0.1, duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
                 >
                   <ProfileCard
-                    profile={profileData?.profile}
-                    skills={profileData?.skills}
+                    profile={profile}
+                    skills={skills}
                   />
-                  <ResumeModal resumeUrl={profileData?.profile.resume_url} />
+                  <ResumeModal resumeUrl={profile.resume_url} />
                 </motion.div>
 
                 {/* Main — bento grid */}
@@ -111,12 +105,11 @@ export default function AboutSection() {
                     <LanguageBar />
                   </div>
                   <div className="min-w-0">
-                    <ExperienceCard experience={profileData?.experience} />
+                    <ExperienceCard experience={experience} />
                   </div>
                 </motion.div>
               </div>
             </motion.div>
-            )}
           </div>
         </WarpBackground>
       </section>

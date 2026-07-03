@@ -11,8 +11,8 @@ const USERNAME = "Hassnain-Ahmed";
 const TOKEN = process.env.GITHUB_TOKEN || "";
 
 if (!TOKEN) {
-  console.error("Missing GITHUB_TOKEN env var. Create a fine-grained PAT with read-only public repo access.");
-  process.exit(1);
+  console.warn("⚠ GITHUB_TOKEN not set — skipping GitHub refresh, keeping existing githubData.json.");
+  process.exit(0);
 }
 
 const headers = {

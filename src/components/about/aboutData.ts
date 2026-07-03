@@ -12,10 +12,12 @@ export interface ProfileInfo {
 }
 
 export interface Language {
+  id?: string;
   name: string;
   percentage: number;
   color: string;
   icon_url?: string;
+  sort_order?: number;
 }
 
 export interface Stat {

@@ -1,23 +1,22 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { useGitHub } from "./GitHubContext";
-import { useLanguages } from "@/hooks/useLanguages";
+import { languages as dbLanguages } from "@/data";
 import { defaultLanguages } from "./aboutData";
 
 export default function LanguageBar() {
   const { data } = useGitHub();
-  const { data: dbLanguages, isLoading: dbLoading } = useLanguages();
-  // DB (admin) takes priority; GitHub API is fallback; show nothing until DB finishes loading
-  const languages = dbLoading
-    ? null
-    : dbLanguages && dbLanguages.length > 0
+  // Prefer DB languages when present, else GitHub-derived, else defaults.
+  const githubLanguages = data?.languages;
+  const languages =
+    dbLanguages && dbLanguages.length > 0
       ? dbLanguages
-      : data?.languages ?? defaultLanguages;
+      : githubLanguages && githubLanguages.length > 0
+        ? githubLanguages
+        : defaultLanguages;
 
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  if (!languages) return <div ref={ref} />;
 
   return (
     <div ref={ref} className="flex h-full flex-col gap-3 md:flex-row md:items-stretch">
@@ -75,6 +74,8 @@ export default function LanguageBar() {
               <img
                 src={lang.icon_url}
                 alt={lang.name}
+                loading="lazy"
+                decoding="async"
                 className="h-3.5 w-3.5 shrink-0 object-contain"
               />
             ) : (

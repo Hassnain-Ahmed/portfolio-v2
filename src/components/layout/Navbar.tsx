@@ -1,4 +1,5 @@
-import { motion } from "motion/react";
+import { useScrollSpy } from "@/hooks/useScrollSpy";
+import { motion, useReducedMotion } from "motion/react";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -103,44 +104,54 @@ const GlassFilter: React.FC = () => (
 
 const ICON_BASE = "https://img.icons8.com/3d-fluency/94";
 
-const NAV_ITEMS = [
-  { icon: `${ICON_BASE}/home.png`, label: "Home", href: "/", bg: "linear-gradient(135deg, #60A5FA, #3B82F6)" },
-  { icon: `${ICON_BASE}/briefcase.png`, label: "Work", href: "/work", bg: "linear-gradient(135deg, #FB923C, #EA580C)" },
-  { icon: `${ICON_BASE}/person-male.png`, label: "About", href: "/about", bg: "linear-gradient(135deg, #34D399, #059669)" },
-  { icon: `${ICON_BASE}/gear.png`, label: "Process", href: "/process", bg: "linear-gradient(135deg, #9CA3AF, #4B5563)" },
-  { icon: `${ICON_BASE}/mail.png`, label: "Contact", href: "/contact", bg: "linear-gradient(135deg, #60A5FA, #2563EB)" },
-  { icon: `${ICON_BASE}/quote-left.png`, label: "Testimonials", href: "/testimonials", bg: "linear-gradient(135deg, #F472B6, #DB2777)" },
-  { icon: `${ICON_BASE}/github.png`, label: "GitHub", href: "https://github.com/Hassnain-Ahmed", bg: "linear-gradient(135deg, #374151, #111827)" },
-  { icon: `${ICON_BASE}/linkedin.png`, label: "LinkedIn", href: "https://www.linkedin.com/in/hasnain-ahmed-869741291", bg: "linear-gradient(135deg, #38BDF8, #0A66C2)" },
+type NavItem = {
+  icon: string;
+  label: string;
+  bg: string;
+  section?: string; // in-page anchor id (internal items)
+  path?: string; // standalone route (internal items)
+  href?: string; // external items
+  external?: boolean;
+};
+
+const NAV_ITEMS: NavItem[] = [
+  { icon: `${ICON_BASE}/home.png`, label: "Home", section: "hero", path: "/", bg: "linear-gradient(135deg, #60A5FA, #3B82F6)" },
+  { icon: `${ICON_BASE}/person-male.png`, label: "About", section: "about", path: "/about", bg: "linear-gradient(135deg, #34D399, #059669)" },
+  { icon: `${ICON_BASE}/briefcase.png`, label: "Work", section: "work", path: "/work", bg: "linear-gradient(135deg, #FB923C, #EA580C)" },
+  { icon: `${ICON_BASE}/gear.png`, label: "Process", section: "process", path: "/process", bg: "linear-gradient(135deg, #9CA3AF, #4B5563)" },
+  { icon: `${ICON_BASE}/quote-left.png`, label: "Testimonials", section: "testimonials", path: "/testimonials", bg: "linear-gradient(135deg, #F472B6, #DB2777)" },
+  { icon: `${ICON_BASE}/mail.png`, label: "Contact", section: "contact", path: "/contact", bg: "linear-gradient(135deg, #60A5FA, #2563EB)" },
+  { icon: `${ICON_BASE}/github.png`, label: "GitHub", href: "https://github.com/Hassnain-Ahmed", external: true, bg: "linear-gradient(135deg, #374151, #111827)" },
+  { icon: `${ICON_BASE}/linkedin.png`, label: "LinkedIn", href: "https://www.linkedin.com/in/hasnain-ahmed-869741291", external: true, bg: "linear-gradient(135deg, #38BDF8, #0A66C2)" },
 ];
+
+const SECTION_IDS = ["hero", "about", "work", "process", "testimonials", "contact"];
 
 export default function Navbar() {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const reduceMotion = useReducedMotion();
+  const onLanding = location.pathname === "/";
+  const activeSection = useScrollSpy(SECTION_IDS, onLanding);
 
   useEffect(() => {
-    // On non-home pages there is no spline-viewer — show immediately
-    if (location.pathname !== "/") {
-      setVisible(true);
-      return;
+    const timeout = setTimeout(() => setVisible(true), 150);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  const goToSection = (section: string) => {
+    if (onLanding) {
+      document.getElementById(section)?.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "start",
+      });
+      window.history.replaceState(null, "", section === "hero" ? "/" : `/#${section}`);
+    } else {
+      // Land on the one-pager; Layout's hash handler scrolls to the section.
+      navigate(section === "hero" ? "/" : `/#${section}`);
     }
-
-    const show = () => setVisible(true);
-    const viewer = document.querySelector("spline-viewer");
-
-    if (viewer) {
-      viewer.addEventListener("load", show);
-    }
-
-    // Reduced fallback: 3s instead of 15s
-    const timeout = setTimeout(show, 3000);
-
-    return () => {
-      viewer?.removeEventListener("load", show);
-      clearTimeout(timeout);
-    };
-  }, [location.pathname]);
+  };
 
   return (
     <>
@@ -159,21 +170,30 @@ export default function Navbar() {
           width: { duration: 0.6, ease: [0.25, 1, 0.5, 1] },
         }}
       >
-        <GlassEffect className="rounded-2xl px-4 py-2 hover:px-5 hover:py-3 hover:rounded-3xl">
-          <div className="flex items-center justify-center gap-2 whitespace-nowrap">
+        <GlassEffect className="rounded-2xl px-2.5 py-1.5 hover:px-3 hover:py-2 hover:rounded-3xl sm:px-4 sm:py-2 sm:hover:px-5 sm:hover:py-3">
+          <div className="flex items-center justify-center gap-1 whitespace-nowrap sm:gap-2">
             {NAV_ITEMS.map((item, index) => {
-              const isExternal = item.href.startsWith("http");
+              const isExternal = !!item.external;
               const isFirstExternal =
                 isExternal &&
-                (index === 0 || !NAV_ITEMS[index - 1].href.startsWith("http"));
-              const isActive = !isExternal && location.pathname === item.href;
+                (index === 0 || !NAV_ITEMS[index - 1].external);
+              const isActive =
+                !isExternal &&
+                (onLanding
+                  ? activeSection === item.section
+                  : location.pathname === item.path);
+              const href = isExternal
+                ? item.href
+                : item.section === "hero"
+                  ? "/"
+                  : `/#${item.section}`;
               return (
                 <React.Fragment key={item.label}>
                   {isFirstExternal && (
-                    <div className="mx-1 h-6 w-px bg-gray-500/40 rounded-full" />
+                    <div className="mx-0.5 h-5 w-px rounded-full bg-gray-500/40 sm:mx-1 sm:h-6" />
                   )}
                   <a
-                    href={item.href}
+                    href={href}
                     title={item.label}
                     {...(isExternal
                       ? { target: "_blank", rel: "noopener noreferrer" }
@@ -182,11 +202,11 @@ export default function Navbar() {
                       !isExternal
                         ? (e) => {
                           e.preventDefault();
-                          navigate(item.href);
+                          goToSection(item.section!);
                         }
                         : undefined
                     }
-                    className={`relative flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-700 hover:scale-110 ${isActive ? "scale-110" : ""
+                    className={`relative flex h-8 w-8 items-center justify-center rounded-xl transition-all duration-700 hover:scale-110 sm:h-10 sm:w-10 ${isActive ? "scale-110" : ""
                       }`}
                     style={{
                       transitionTimingFunction:
@@ -201,13 +221,13 @@ export default function Navbar() {
                       />
                     )}
                     <span
-                      className="flex h-9 w-9 items-center justify-center shadow-md"
+                      className="flex h-7 w-7 items-center justify-center shadow-md sm:h-9 sm:w-9"
                       style={{
                         background: item.bg,
                         borderRadius: "22.37%",
                       }}
                     >
-                      <img src={item.icon} alt={item.label} className="h-5 w-5 object-contain drop-shadow-sm" />
+                      <img src={item.icon} alt={item.label} className="h-4 w-4 object-contain drop-shadow-sm sm:h-5 sm:w-5" />
                     </span>
                   </a>
                 </React.Fragment>

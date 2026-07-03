@@ -103,7 +103,12 @@
     @apply border-border outline-ring/50;
   }
   html {
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
   body {
     @apply bg-bg-void text-text-primary font-sans;
@@ -118,4 +123,16 @@
 ::selection {
   background-color: var(--color-accent-faint);
   color: var(--color-text-primary);
+}
+
+@keyframes wa-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  75%,
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
 }

@@ -14,10 +14,12 @@ export function useLanguages() {
       if (error) throw error;
 
       return (data ?? []).map((row) => ({
+        id: row.id as string,
         name: row.name as string,
         percentage: row.percentage as number,
         color: row.color as string,
         icon_url: (row.icon_url as string) ?? "",
+        sort_order: row.sort_order as number,
       }));
     },
   });

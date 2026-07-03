@@ -1,0 +1,200 @@
+[
+  {
+    "id": "d2ed76fb-4687-456b-af20-e648cae5eaab",
+    "title": "Graphic Designer Portfolio",
+    "fileName": "graphic-designer.tsx",
+    "folder": "Websites",
+    "description": "",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1781085072153.webp",
+    "techStack": [
+      "Vite React",
+      "Tailwindcss",
+      "Framer Motion",
+      "Custom Graphics"
+    ],
+    "url": "https://design-humera.vercel.app/",
+    "year": "2025",
+    "hidden": false
+  },
+  {
+    "id": "690ede67-5273-49ee-a469-a7a04602cc70",
+    "title": "Capital Complete Solutions",
+    "fileName": "capital-cs.tsx",
+    "folder": "Websites",
+    "description": "",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1773145131154.webp",
+    "techStack": [
+      "Next.js",
+      "React",
+      "Tailwindcss",
+      "Framer Motion"
+    ],
+    "url": "https://capital-cs.com",
+    "year": "2026",
+    "hidden": false
+  },
+  {
+    "id": "b30ee89f-b851-45f5-8fba-526614e0e747",
+    "title": "Unique Girls Hostel",
+    "fileName": "hostel.tsx",
+    "folder": "Websites",
+    "description": "",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1773146265085.webp",
+    "techStack": [
+      "React",
+      "Javascript",
+      "Typescript",
+      "CSS",
+      "Tailwindcss"
+    ],
+    "url": "https://unique-girls-hostel.vercel.app/",
+    "year": "2025",
+    "hidden": false
+  },
+  {
+    "id": "8ad8a85d-623c-4811-8ec2-2c715ac225e1",
+    "title": "Mental Health Evaluator System",
+    "fileName": "mhes.jsx",
+    "folder": "Websites",
+    "description": "Mental Health Evaluator System is built using modern web development tools and libraries to create a responsive and interactive user interface for evaluating mental health conditions.",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1773159298574.webp",
+    "techStack": [
+      "Javascript",
+      "TailwindCss",
+      "Lucide React",
+      "React Router Dom"
+    ],
+    "url": "https://github.com/Hassnain-Ahmed/MHES-frontend",
+    "year": "2024-2025",
+    "hidden": false
+  },
+  {
+    "id": "a7e9eaa9-2b60-4184-917f-abe3829e605b",
+    "title": "Academy Management System",
+    "fileName": "ams.jsx",
+    "folder": "Management Systems",
+    "description": "The Academy Management System is a full-stack web application built using the MERN stack (MongoDB, Express.js, React, Node.js). It is designed to simplify and streamline the management of academic institutions by handling student enrollment, course management, attendance tracking, and more.",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1773161476314.webp",
+    "techStack": [
+      "MongoDB",
+      "React",
+      "Express.js",
+      "Node.js"
+    ],
+    "url": "https://github.com/Hassnain-Ahmed/Academy-Management-System",
+    "year": "2025",
+    "hidden": false
+  },
+  {
+    "id": "3c2ac1a1-2467-44c6-ba75-837a3e1fb38b",
+    "title": "Inventory Management System",
+    "fileName": "ims.php",
+    "folder": "Management Systems",
+    "description": "This project is an Inventory Management System developed using PHP, HTML, CSS, JavaScript, jQuery, AJAX, Bootstrap, Font Awesome, and Google Fonts. The system allows administrators to manage products, categories, suppliers, and inventory levels efficiently.",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1773159873501.webp",
+    "techStack": [
+      "PHP",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "jQuery",
+      "AJAX",
+      "Bootstrap",
+      "Font Awesome",
+      "and Google Fonts"
+    ],
+    "url": "https://github.com/Hassnain-Ahmed/Inventory-Management-System",
+    "year": "2024",
+    "hidden": false
+  },
+  {
+    "id": "3e7a05bf-64e8-41f8-b84c-e6c5494035b0",
+    "title": "Purcity CO2 Calculator",
+    "fileName": "purcity.tsx",
+    "folder": "Management Systems",
+    "description": "Web-Based Platform for calculation COS emissions within a building, and regulating HVACs",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1773159425552.webp",
+    "techStack": [
+      "Next.js",
+      "React",
+      "TailwindCss",
+      "Material UI",
+      "Shadcn"
+    ],
+    "url": "#",
+    "year": "2024",
+    "hidden": false
+  },
+  {
+    "id": "5eef2fd0-2f80-44b3-98e8-e8381cad6d33",
+    "title": "Hospital Record Management System",
+    "fileName": "hrms.php",
+    "folder": "Management Systems",
+    "description": "This project is a Hospital Record Management System developed using HTML, CSS, JavaScript, jQuery, AJAX, PHP, and SQL. The system allows for managing patient records, doctor schedules, appointments, and other hospital-related information.",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1773160701270.webp",
+    "techStack": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "jQuery",
+      "AJAX",
+      "PHP",
+      "and SQL."
+    ],
+    "url": "https://github.com/Hassnain-Ahmed/Hospital-Record-Management-System",
+    "year": "2024",
+    "hidden": false
+  },
+  {
+    "id": "de4156e5-e7e0-4628-9e81-54b39e54ca64",
+    "title": "Student Project Partners",
+    "fileName": "spp.php",
+    "folder": "Management Systems",
+    "description": "Student Project Partners is a web application designed to help university students find and manage project partners for their courses. It streamlines the process of collaboration and enhances the academic experience by providing a platform for students to connect based on their courses, programs, and batches.",
+    "image": "",
+    "techStack": [
+      "Laravel 10.x",
+      "PHP 8.x",
+      "MySQL",
+      "Tailwind CSS",
+      "Alpine.js (for interactive components)"
+    ],
+    "url": "https://github.com/Hassnain-Ahmed/student-project-partners",
+    "year": "2024",
+    "hidden": false
+  },
+  {
+    "id": "de8b2f87-b2ab-4faf-aada-be2b66edb190",
+    "title": "Air Quality Index Prediction",
+    "fileName": "aqip.py",
+    "folder": "Predective AI",
+    "description": "This  project aims to develop a robust predictive model for forecasting the Air Quality Index (AQI) using data science techniques.",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1773160140005.webp",
+    "techStack": [
+      "Python",
+      "Jupyter Notebook",
+      "HTML",
+      "TailwindCss"
+    ],
+    "url": "https://github.com/Hassnain-Ahmed/Air-Quality-Index-Prediction",
+    "year": "2024",
+    "hidden": false
+  },
+  {
+    "id": "ecf436d7-8abc-44b2-9868-0f862144238e",
+    "title": "Toon Trails",
+    "fileName": "toon-trails.c#",
+    "folder": "Games",
+    "description": "A free roam car driving and character roaming 3D game designed and developed in unity game engine.",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1773145623986.webp",
+    "techStack": [
+      "Unity Game Engine",
+      "C#",
+      "SketchFab Assets",
+      "Poly Haven"
+    ],
+    "url": "https://github.com/Hassnain-Ahmed/Toon-Trails",
+    "year": "2024",
+    "hidden": false
+  }
+]

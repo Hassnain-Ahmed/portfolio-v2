@@ -1,3 +1,4 @@
+import PublishButton from "@/components/admin/PublishButton";
 import { useAuth } from "@/context/AuthContext";
 import { LayoutDashboard, Briefcase, Settings, User, LogOut, MessageSquare, Mail, Menu, X, Languages, Quote } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
@@ -47,6 +48,7 @@ export default function AdminLayout() {
       </nav>
 
       <div className="border-t border-gray-800 p-3">
+        <PublishButton />
         <button
           onClick={signOut}
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-400 transition-colors hover:bg-gray-800 hover:text-gray-200"

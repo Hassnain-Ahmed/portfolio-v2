@@ -1,21 +1,22 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronRight, Folder, FolderOpen, FileCode } from "lucide-react";
-import {
-  TypescriptOriginal,
-  JavascriptOriginal,
-  ReactOriginal,
-  PythonOriginal,
-  Html5Original,
-  Css3Original,
-  PhpOriginal,
-  RustOriginal,
-  GoOriginal,
-  SwiftOriginal,
-  KotlinOriginal,
-  CplusplusOriginal,
-  CsharpOriginal,
-} from "devicons-react";
+// Per-icon subpath imports — importing from the "devicons-react" barrel pulls
+// the ENTIRE icon set (thousands of components, ~9MB) into the bundle because
+// the barrel isn't tree-shaken. Subpath imports pull only what's used.
+import TypescriptOriginal from "devicons-react/icons/TypescriptOriginal";
+import JavascriptOriginal from "devicons-react/icons/JavascriptOriginal";
+import ReactOriginal from "devicons-react/icons/ReactOriginal";
+import PythonOriginal from "devicons-react/icons/PythonOriginal";
+import Html5Original from "devicons-react/icons/Html5Original";
+import Css3Original from "devicons-react/icons/Css3Original";
+import PhpOriginal from "devicons-react/icons/PhpOriginal";
+import RustOriginal from "devicons-react/icons/RustOriginal";
+import GoOriginal from "devicons-react/icons/GoOriginal";
+import SwiftOriginal from "devicons-react/icons/SwiftOriginal";
+import KotlinOriginal from "devicons-react/icons/KotlinOriginal";
+import CplusplusOriginal from "devicons-react/icons/CplusplusOriginal";
+import CsharpOriginal from "devicons-react/icons/CsharpOriginal";
 import type { ComponentType } from "react";
 import { cn } from "@/lib/utils";
 import type { Project } from "./projects";

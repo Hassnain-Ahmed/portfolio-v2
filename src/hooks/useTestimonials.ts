@@ -14,14 +14,25 @@ export interface Testimonial {
   sort_order: number;
 }
 
-export function useTestimonials() {
+/**
+ * Fetch testimonials.
+ * @param approvedOnly When true (public site), returns only approved
+ * testimonials. Defaults to false so the admin sees all rows.
+ */
+export function useTestimonials(approvedOnly = false) {
   return useQuery({
-    queryKey: ["testimonials"],
+    queryKey: ["testimonials", { approvedOnly }],
     queryFn: async (): Promise<Testimonial[]> => {
-      const { data, error } = await supabase
+      let query = supabase
         .from("testimonials")
         .select("*")
         .order("sort_order");
+
+      if (approvedOnly) {
+        query = query.eq("approved", true);
+      }
+
+      const { data, error } = await query;
 
       if (error) throw error;
 

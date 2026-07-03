@@ -1,0 +1,106 @@
+[
+  {
+    "id": "83f98089-42a6-4a8b-a182-8dcc99b89f70",
+    "name": "Typescript",
+    "percentage": 50,
+    "color": "#3178C6",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773513341399.svg",
+    "sort_order": 0
+  },
+  {
+    "id": "aea9d12a-087f-44b1-ba7f-1ef6bb311cbc",
+    "name": "Python",
+    "percentage": 21,
+    "color": "#3572A5",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514561810.svg",
+    "sort_order": 1
+  },
+  {
+    "id": "cbb57e91-0cf7-46ce-9ba3-418f6aea328c",
+    "name": "PHP",
+    "percentage": 10,
+    "color": "#4F5D95",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514566598.svg",
+    "sort_order": 2
+  },
+  {
+    "id": "03c190f2-d633-4b4d-a5b9-e89d02440d5b",
+    "name": "Javascript",
+    "percentage": 10,
+    "color": "#F7DF1E",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514571218.svg",
+    "sort_order": 3
+  },
+  {
+    "id": "1137d677-4bc6-41de-bd5f-4abe672ac66c",
+    "name": "HTML",
+    "percentage": 5,
+    "color": "#E34C26",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514578333.svg",
+    "sort_order": 4
+  },
+  {
+    "id": "83079205-0cbb-41c3-a5b1-660bf685e61b",
+    "name": "CSS",
+    "percentage": 4,
+    "color": "#563D7C",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514583648.svg",
+    "sort_order": 5
+  },
+  {
+    "id": "c9e14d2f-c5ec-4d18-8a07-74974cdb5f12",
+    "name": "Jupyter Notebook",
+    "percentage": 3,
+    "color": "#DA5B0B",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514592245.svg",
+    "sort_order": 6
+  },
+  {
+    "id": "cd6d612f-b8b3-4c67-9c10-2b23311b1b3f",
+    "name": "Java",
+    "percentage": 3,
+    "color": "#B07219",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514597688.svg",
+    "sort_order": 7
+  },
+  {
+    "id": "53cd5e31-8139-45e0-9170-12a6477fdc9c",
+    "name": "SCSS",
+    "percentage": 1,
+    "color": "#C6538C",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514603826.svg",
+    "sort_order": 8
+  },
+  {
+    "id": "ff1ce6af-9ccb-4181-935c-90922608913e",
+    "name": "Blade",
+    "percentage": 1,
+    "color": "#F7523F",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514609102.svg",
+    "sort_order": 9
+  },
+  {
+    "id": "dcc7c455-5173-4fb4-b703-bb299b86868d",
+    "name": "PGSQL",
+    "percentage": 1,
+    "color": "#336790",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514651719.svg",
+    "sort_order": 10
+  },
+  {
+    "id": "219b7b04-92c8-4739-ba5e-ee0d8e3cfa27",
+    "name": "Shell",
+    "percentage": 1,
+    "color": "#89E051",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514659049.svg",
+    "sort_order": 11
+  },
+  {
+    "id": "daeaab16-eb41-45ff-a95d-1074e8c9ee0b",
+    "name": "Dockerfile",
+    "percentage": 1,
+    "color": "#384D54",
+    "icon_url": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/languages/1773514665726.svg",
+    "sort_order": 12
+  }
+]

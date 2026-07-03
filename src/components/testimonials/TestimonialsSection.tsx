@@ -1,4 +1,4 @@
-import { useTestimonials } from "@/hooks/useTestimonials";
+import { testimonials } from "@/data";
 import type { Testimonial } from "@/hooks/useTestimonials";
 import { supabase } from "@/lib/supabase";
 import { Star, Terminal } from "lucide-react";
@@ -333,9 +333,8 @@ function SubmitSection({ lineStart }: { lineStart: number }) {
 export default function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  const { data: testimonials, isLoading } = useTestimonials();
 
-  const lineCount = (testimonials?.length ?? 0) * 3;
+  const lineCount = testimonials.length * 3;
 
   return (
     <section
@@ -399,13 +398,8 @@ export default function TestimonialsSection() {
 
           {/* Terminal body */}
           <div className="p-4 md:p-6">
-            {isLoading ? (
-              <div className="flex min-h-[200px] items-center justify-center">
-                <div className="h-5 w-5 animate-spin rounded-full border-2 border-neutral-700 border-t-purple-500" />
-              </div>
-            ) : (
               <div>
-                {testimonials && testimonials.length > 0 && (
+                {testimonials.length > 0 && (
                   <>
                     {/* File header comment */}
                     <motion.div
@@ -459,7 +453,7 @@ export default function TestimonialsSection() {
                   initial={{ opacity: 0 }}
                   animate={isInView ? { opacity: 1 } : {}}
                   transition={{
-                    delay: 0.3 + 0.12 * (testimonials?.length ?? 0),
+                    delay: 0.3 + 0.12 * testimonials.length,
                     duration: 0.3,
                   }}
                   className="mt-4 flex items-center gap-2"
@@ -470,7 +464,6 @@ export default function TestimonialsSection() {
                   <span className="h-4 w-2 animate-pulse bg-green-400/70" />
                 </motion.div>
               </div>
-            )}
           </div>
         </motion.div>
       </div>

@@ -1,0 +1,25 @@
+{
+  "location": "Islamabad, Pakistan",
+  "email": "dev.hassnain77@gmail.com",
+  "availability": "Available for freelance projects",
+  "socials": [
+    {
+      "href": "https://github.com/Hassnain-Ahmed",
+      "icon": "Github",
+      "label": "GitHub",
+      "handle": "@Hassnain-Ahmed"
+    },
+    {
+      "href": "https://linkedin.com/in/hassnain-ahmed",
+      "icon": "Linkedin",
+      "label": "LinkedIn",
+      "handle": "Hassnain Ahmed"
+    },
+    {
+      "href": "mailto:dev.hassnain77@gmail.com",
+      "icon": "Mail",
+      "label": "Email",
+      "handle": "dev.hassnain77@gmail.com"
+    }
+  ]
+}

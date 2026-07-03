@@ -1,5 +1,6 @@
 import { FileCode, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { optimizedImageUrl } from "@/lib/imageUrl";
 import type { Project } from "./projects";
 
 interface ProjectPreviewProps {
@@ -51,8 +52,12 @@ export default function ProjectPreview({ project }: ProjectPreviewProps) {
               transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
             >
               <img
-                src={project.image}
+                src={optimizedImageUrl(project.image, { width: 800, resize: "cover" })}
                 alt={project.title}
+                width={800}
+                height={450}
+                loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = "none";

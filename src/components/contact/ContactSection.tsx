@@ -1,11 +1,18 @@
-import { DottedSurface } from "@/components/ui/dotted-surface";
 import { cn } from "@/lib/utils";
-import { useContactInfo } from "@/hooks/useContactInfo";
+import { contactInfo } from "@/data";
 import { supabase } from "@/lib/supabase";
 import { ArrowUpRight, Github, Globe, Instagram, Linkedin, Mail, MapPin, Send, Twitter, Youtube, type LucideIcon } from "lucide-react";
 import { motion, useInView } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import PixelCat, { type CatHandle } from "./PixelCat";
+
+// The dotted surface is a decorative three.js background (~500kB). Lazy-load it
+// so the contact page paints immediately and the WebGL scene streams in after.
+const DottedSurface = lazy(() =>
+  import("@/components/ui/dotted-surface").then((m) => ({
+    default: m.DottedSurface,
+  }))
+);
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Github, Linkedin, Mail, Twitter, Instagram, Youtube, Globe,
@@ -115,7 +122,6 @@ function ClayTextarea({
 }
 
 export default function ContactSection() {
-  const { data: contactInfo } = useContactInfo();
   const sectionRef = useRef<HTMLElement>(null);
   const catRef = useRef<CatHandle>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
@@ -169,7 +175,9 @@ export default function ContactSection() {
       ref={sectionRef}
       className="relative min-h-screen overflow-hidden bg-neutral-50 pt-20"
     >
-      <DottedSurface className="!z-0 opacity-40" />
+      <Suspense fallback={null}>
+        <DottedSurface className="!z-0 opacity-40" />
+      </Suspense>
       <PixelCat ref={catRef} />
 
       {/* Radial glow */}

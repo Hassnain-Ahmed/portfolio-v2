@@ -23,8 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# Build-time fetched GitHub data (contains no secrets, but regenerated per build)
-src/components/about/githubData.json
+# Build-time data snapshots (githubData.json + src/data/*.json) are committed so
+# the app builds without live fetches; they're regenerated on each build/publish.
 .env
 ./claude/settings.*
 .claude/*
