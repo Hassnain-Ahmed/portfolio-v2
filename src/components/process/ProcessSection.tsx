@@ -154,7 +154,7 @@ export default function ProcessSection() {
                   onMouseEnter={() => setActive(i)}
                   aria-label={`Step ${i + 1}: ${s.label}`}
                   aria-current={isActive}
-                  className="group absolute flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full outline-none transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 sm:h-[52px] sm:w-[52px]"
+                  className="group absolute flex h-11 w-11 items-center justify-center rounded-full outline-none transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 sm:h-[52px] sm:w-[52px]"
                   style={{
                     left: `${x}%`,
                     top: `${y}%`,

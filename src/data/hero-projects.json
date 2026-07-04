@@ -71,5 +71,22 @@
     "url": "",
     "year": "2026",
     "hidden": false
+  },
+  {
+    "id": "ecf436d7-8abc-44b2-9868-0f862144238e",
+    "title": "Toon Trails",
+    "fileName": "toon-trails.c#",
+    "folder": "Games",
+    "description": "A free roam car driving and character roaming 3D game designed and developed in unity game engine.",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1773145623986.webp",
+    "techStack": [
+      "Unity Game Engine",
+      "C#",
+      "SketchFab Assets",
+      "Poly Haven"
+    ],
+    "url": "https://github.com/Hassnain-Ahmed/Toon-Trails",
+    "year": "2024",
+    "hidden": false
   }
 ]
