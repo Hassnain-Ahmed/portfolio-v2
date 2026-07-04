@@ -1,12 +1,13 @@
 import PublishButton from "@/components/admin/PublishButton";
 import { useAuth } from "@/context/AuthContext";
-import { LayoutDashboard, Briefcase, Settings, User, LogOut, MessageSquare, Mail, Menu, X, Languages, Quote } from "lucide-react";
+import { LayoutDashboard, Briefcase, Sparkles, Settings, User, LogOut, MessageSquare, Mail, Menu, X, Languages, Quote } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useState } from "react";
 
 const NAV = [
   { to: "/admin", icon: LayoutDashboard, label: "Dashboard", end: true },
   { to: "/admin/projects", icon: Briefcase, label: "Projects", end: false },
+  { to: "/admin/hero", icon: Sparkles, label: "Hero Slider", end: false },
   { to: "/admin/process", icon: Settings, label: "Process", end: false },
   { to: "/admin/about", icon: User, label: "About", end: false },
   { to: "/admin/languages", icon: Languages, label: "Languages", end: false },

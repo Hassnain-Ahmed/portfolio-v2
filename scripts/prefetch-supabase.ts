@@ -86,29 +86,39 @@ async function run() {
     });
   }
 
-  // projects.json — non-hidden, ordered (mirrors useProjects.ts public filter)
+  // projects.json (public, non-hidden) + hero-projects.json (featured, ordered).
   {
     const { data, error } = await supabase
       .from("projects")
       .select("*")
       .order("sort_order", { ascending: true });
     if (error) throw error;
+    const rows = data ?? [];
+    const mapProject = (row: any) => ({
+      id: row.id,
+      title: row.title,
+      fileName: row.file_name,
+      folder: row.folder,
+      description: row.description ?? "",
+      image: row.image_url ?? "",
+      techStack: row.tech_stack ?? [],
+      url: row.url ?? "",
+      year: row.year ?? "",
+      hidden: row.hidden ?? false,
+    });
+
     write(
       "projects.json",
-      (data ?? [])
-        .filter((row) => !(row.hidden ?? false))
-        .map((row) => ({
-          id: row.id,
-          title: row.title,
-          fileName: row.file_name,
-          folder: row.folder,
-          description: row.description ?? "",
-          image: row.image_url ?? "",
-          techStack: row.tech_stack ?? [],
-          url: row.url ?? "",
-          year: row.year ?? "",
-          hidden: false,
-        }))
+      rows.filter((row) => !(row.hidden ?? false)).map(mapProject)
+    );
+
+    // Featured hero-slider projects (admin-selected), ordered by hero_order.
+    write(
+      "hero-projects.json",
+      rows
+        .filter((row) => row.hero_order !== null && row.hero_order !== undefined)
+        .sort((a, b) => (a.hero_order ?? 0) - (b.hero_order ?? 0))
+        .map(mapProject)
     );
   }
 

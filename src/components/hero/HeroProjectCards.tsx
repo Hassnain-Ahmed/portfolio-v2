@@ -1,5 +1,5 @@
 import { optimizedImageUrl } from "@/lib/imageUrl";
-import { projects } from "@/data";
+import { heroProjects, projects } from "@/data";
 import { motion, useReducedMotion } from "motion/react";
 import type { Project } from "@/components/work/projects";
 
@@ -46,7 +46,8 @@ function PreviewCard({ project }: { project: Project }) {
 export default function HeroProjectCards() {
   const reduceMotion = useReducedMotion();
 
-  const cards = projects.slice(0, 4);
+  // Admin-selected featured projects; fall back to the first few if none set.
+  const cards = heroProjects.length > 0 ? heroProjects : projects.slice(0, 4);
   if (cards.length === 0) return null;
 
   // Container-relative percentages — no JS measurement needed.

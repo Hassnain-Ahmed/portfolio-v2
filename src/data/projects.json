@@ -1,5 +1,78 @@
 [
   {
+    "id": "d6c8d822-2229-4fa7-895b-5c614a82812a",
+    "title": "AI Outbound Caller",
+    "fileName": "outbound-caller.tsx",
+    "folder": "AI Tools",
+    "description": "A visual workflow builder for AI outbound calling. Drag-and-drop pipelines chain a trigger to an AI voice call, CRM logging, and status updates, with native HubSpot integration and a live workflow preview.",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1783086850136-2.webp",
+    "techStack": [
+      "React",
+      "TypeScript",
+      "AI Voice",
+      "HubSpot",
+      "Workflow Engine"
+    ],
+    "url": "",
+    "year": "2026",
+    "hidden": false
+  },
+  {
+    "id": "85b3d18f-cd59-4360-b48e-f15fc8618b86",
+    "title": "AI Guide Extension",
+    "fileName": "ai-guide.tsx",
+    "folder": "AI Tools",
+    "description": "A browser extension that walks users through any web app step by step. It highlights the exact element to click, tracks progress through a flow, and uses an LLM to pick the next best action with a live confidence score.",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1783086850136-0.webp",
+    "techStack": [
+      "React",
+      "TypeScript",
+      "Browser Extension",
+      "LLM",
+      "Tailwindcss"
+    ],
+    "url": "",
+    "year": "2026",
+    "hidden": false
+  },
+  {
+    "id": "d4805179-fb95-4188-b2f2-2416c712643c",
+    "title": "Crypto Chiefs",
+    "fileName": "crypto-chiefs.tsx",
+    "folder": "AI Tools",
+    "description": "A crypto trading intelligence dashboard: real-time prices, technical indicators (EMA, RSI), and long/short trade ideas with live candlestick charts and per-symbol signal flows across 120+ currencies.",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1783086850136-1.webp",
+    "techStack": [
+      "React",
+      "TypeScript",
+      "TradingView",
+      "WebSockets",
+      "Exchange APIs"
+    ],
+    "url": "",
+    "year": "2026",
+    "hidden": false
+  },
+  {
+    "id": "82d4c766-8af7-46ef-95bd-e034087d4c03",
+    "title": "RIS Intelligence",
+    "fileName": "ris-intelligence.tsx",
+    "folder": "AI Tools",
+    "description": "A semantic search and geospatial intelligence platform over German municipal council documents (Ratsinformationssystem). Search by meaning, filter by committee and category, explore results on a map, and query an AI chat across thousands of meeting records.",
+    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1783086850136-3.webp",
+    "techStack": [
+      "Next.js",
+      "TypeScript",
+      "Vector Search",
+      "Embeddings",
+      "Leaflet",
+      "AI"
+    ],
+    "url": "",
+    "year": "2026",
+    "hidden": false
+  },
+  {
     "id": "690ede67-5273-49ee-a469-a7a04602cc70",
     "title": "Capital Complete Solutions",
     "fileName": "capital-cs.tsx",
@@ -14,41 +87,6 @@
     ],
     "url": "https://capital-cs.com",
     "year": "2026",
-    "hidden": false
-  },
-  {
-    "id": "d2ed76fb-4687-456b-af20-e648cae5eaab",
-    "title": "Graphic Designer Portfolio",
-    "fileName": "graphic-designer.tsx",
-    "folder": "Websites",
-    "description": "",
-    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1781085072153.webp",
-    "techStack": [
-      "Vite React",
-      "Tailwindcss",
-      "Framer Motion",
-      "Custom Graphics"
-    ],
-    "url": "https://design-humera.vercel.app/",
-    "year": "2025",
-    "hidden": false
-  },
-  {
-    "id": "b30ee89f-b851-45f5-8fba-526614e0e747",
-    "title": "Unique Girls Hostel",
-    "fileName": "hostel.tsx",
-    "folder": "Websites",
-    "description": "",
-    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1773146265085.webp",
-    "techStack": [
-      "React",
-      "Javascript",
-      "Typescript",
-      "CSS",
-      "Tailwindcss"
-    ],
-    "url": "https://unique-girls-hostel.vercel.app/",
-    "year": "2025",
     "hidden": false
   },
   {
@@ -195,79 +233,6 @@
     ],
     "url": "https://github.com/Hassnain-Ahmed/Toon-Trails",
     "year": "2024",
-    "hidden": false
-  },
-  {
-    "id": "85b3d18f-cd59-4360-b48e-f15fc8618b86",
-    "title": "AI Guide Extension",
-    "fileName": "ai-guide.tsx",
-    "folder": "AI Tools",
-    "description": "A browser extension that walks users through any web app step by step. It highlights the exact element to click, tracks progress through a flow, and uses an LLM to pick the next best action with a live confidence score.",
-    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1783086850136-0.webp",
-    "techStack": [
-      "React",
-      "TypeScript",
-      "Browser Extension",
-      "LLM",
-      "Tailwindcss"
-    ],
-    "url": "",
-    "year": "2026",
-    "hidden": false
-  },
-  {
-    "id": "d4805179-fb95-4188-b2f2-2416c712643c",
-    "title": "Crypto Chiefs",
-    "fileName": "crypto-chiefs.tsx",
-    "folder": "AI Tools",
-    "description": "A crypto trading intelligence dashboard: real-time prices, technical indicators (EMA, RSI), and long/short trade ideas with live candlestick charts and per-symbol signal flows across 120+ currencies.",
-    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1783086850136-1.webp",
-    "techStack": [
-      "React",
-      "TypeScript",
-      "TradingView",
-      "WebSockets",
-      "Exchange APIs"
-    ],
-    "url": "",
-    "year": "2026",
-    "hidden": false
-  },
-  {
-    "id": "d6c8d822-2229-4fa7-895b-5c614a82812a",
-    "title": "AI Outbound Caller",
-    "fileName": "outbound-caller.tsx",
-    "folder": "AI Tools",
-    "description": "A visual workflow builder for AI outbound calling. Drag-and-drop pipelines chain a trigger to an AI voice call, CRM logging, and status updates, with native HubSpot integration and a live workflow preview.",
-    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1783086850136-2.webp",
-    "techStack": [
-      "React",
-      "TypeScript",
-      "AI Voice",
-      "HubSpot",
-      "Workflow Engine"
-    ],
-    "url": "",
-    "year": "2026",
-    "hidden": false
-  },
-  {
-    "id": "82d4c766-8af7-46ef-95bd-e034087d4c03",
-    "title": "RIS Intelligence",
-    "fileName": "ris-intelligence.tsx",
-    "folder": "AI Tools",
-    "description": "A semantic search and geospatial intelligence platform over German municipal council documents (Ratsinformationssystem). Search by meaning, filter by committee and category, explore results on a map, and query an AI chat across thousands of meeting records.",
-    "image": "https://ntjciiqnojmtxkzfhcte.supabase.co/storage/v1/object/public/portfolio-images/projects/1783086850136-3.webp",
-    "techStack": [
-      "Next.js",
-      "TypeScript",
-      "Vector Search",
-      "Embeddings",
-      "Leaflet",
-      "AI"
-    ],
-    "url": "",
-    "year": "2026",
     "hidden": false
   }
 ]

@@ -22,6 +22,7 @@ const Testimonials = lazy(() => import("@/pages/Testimonials"));
 const LoginPage = lazy(() => import("@/pages/admin/LoginPage"));
 const DashboardPage = lazy(() => import("@/pages/admin/DashboardPage"));
 const ProjectsPage = lazy(() => import("@/pages/admin/ProjectsPage"));
+const HeroPage = lazy(() => import("@/pages/admin/HeroPage"));
 const ProcessPage = lazy(() => import("@/pages/admin/ProcessPage"));
 const AboutPage = lazy(() => import("@/pages/admin/AboutPage"));
 const LanguagesPage = lazy(() => import("@/pages/admin/LanguagesPage"));
@@ -84,6 +85,7 @@ export default function App() {
               <Route path="/admin" element={<AuthGuard><AdminLayout /></AuthGuard>}>
                 <Route index element={<DashboardPage />} />
                 <Route path="projects" element={<ProjectsPage />} />
+                <Route path="hero" element={<HeroPage />} />
                 <Route path="process" element={<ProcessPage />} />
                 <Route path="about" element={<AboutPage />} />
                 <Route path="languages" element={<LanguagesPage />} />

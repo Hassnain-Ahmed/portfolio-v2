@@ -8,6 +8,7 @@
  * regenerates these files.
  */
 import contactInfoData from "./contact-info.json";
+import heroProjectsData from "./hero-projects.json";
 import languagesData from "./languages.json";
 import processStepsData from "./process-steps.json";
 import profileData from "./profile.json";
@@ -30,6 +31,8 @@ export const profile: ProfileInfo = profileJson.profile;
 export const experience: Experience[] = profileJson.experience;
 export const skills: string[] = profileJson.skills;
 export const projects = projectsData as unknown as Project[];
+/** Admin-selected, ordered projects shown in the hero L-path slider. */
+export const heroProjects = heroProjectsData as unknown as Project[];
 export const processSteps = processStepsData as unknown as ProcessStep[];
 export const testimonials = testimonialsData as unknown as Testimonial[];
 export const contactInfo = contactInfoData as unknown as ContactInfo;
