@@ -21,6 +21,7 @@ export default function WorkSection() {
         waveOpacity={0.3}
         blur={12}
         speed="slow"
+        animated={false}
       >
         <motion.div
           initial={{ opacity: 0, y: 40 }}

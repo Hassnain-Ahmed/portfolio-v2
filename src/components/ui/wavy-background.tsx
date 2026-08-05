@@ -3,6 +3,12 @@ import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { createNoise3D } from "simplex-noise";
 
+/**
+ * Offset fed to the noise field when `animated` is false. Picked because it
+ * yields a frame with visible wave separation — `nt = 0` renders nearly flat.
+ */
+const STATIC_FRAME_OFFSET = 0.35;
+
 export const WavyBackground = ({
   children,
   className,
@@ -13,6 +19,7 @@ export const WavyBackground = ({
   blur = 10,
   speed = "fast",
   waveOpacity = 0.5,
+  animated = true,
   ...props
 }: {
   children?: any;
@@ -24,6 +31,11 @@ export const WavyBackground = ({
   blur?: number;
   speed?: "slow" | "fast";
   waveOpacity?: number;
+  /**
+   * When false, a single frame is painted instead of running a requestAnimationFrame
+   * loop. The result is visually a still of the animation; it repaints on resize only.
+   */
+  animated?: boolean;
   [key: string]: any;
 }) => {
   const noiseRef = useRef(createNoise3D());
@@ -64,7 +76,7 @@ export const WavyBackground = ({
     };
 
     const drawWave = (n: number) => {
-      s.nt += getSpeed();
+      if (animated) s.nt += getSpeed();
       for (let i = 0; i < n; i++) {
         ctx.beginPath();
         ctx.lineWidth = waveWidth || 50;
@@ -78,18 +90,31 @@ export const WavyBackground = ({
       }
     };
 
-    const render = () => {
+    const drawFrame = () => {
       ctx.fillStyle = backgroundFill || "black";
       ctx.globalAlpha = waveOpacity || 0.5;
       ctx.fillRect(0, 0, s.w, s.h);
       drawWave(5);
+    };
+
+    const render = () => {
+      drawFrame();
       animationIdRef.current = requestAnimationFrame(render);
     };
 
     resize();
-    render();
+    if (animated) {
+      render();
+    } else {
+      s.nt = STATIC_FRAME_OFFSET;
+      drawFrame();
+    }
 
-    const ro = new ResizeObserver(() => resize());
+    // A resize clears the canvas, so the still frame has to be repainted.
+    const ro = new ResizeObserver(() => {
+      resize();
+      if (!animated) drawFrame();
+    });
     ro.observe(container);
 
     return () => {

@@ -12,6 +12,11 @@ interface WarpBackgroundProps extends HTMLAttributes<HTMLDivElement> {
   beamDelayMin?: number;
   beamDuration?: number;
   gridColor?: string;
+  /**
+   * When false, beams are parked at fixed points along their travel instead of
+   * looping. Visually a still of the animation — the grid and beams both remain.
+   */
+  animated?: boolean;
 }
 
 const Beam = ({
@@ -19,26 +24,41 @@ const Beam = ({
   x,
   delay,
   duration,
+  animated = true,
+  frozenY,
 }: {
   width: string | number;
   x: string | number;
   delay: number;
   duration: number;
+  animated?: boolean;
+  frozenY?: string;
 }) => {
   const hue = Math.floor(Math.random() * 360);
   const ar = Math.floor(Math.random() * 10) + 1;
 
+  const style = {
+    "--x": `${x}`,
+    "--width": `${width}`,
+    "--aspect-ratio": `${ar}`,
+    "--background": `linear-gradient(hsl(${hue} 60% 85%), transparent)`,
+  } as React.CSSProperties;
+
+  const className = `absolute left-[var(--x)] top-0 [aspect-ratio:1/var(--aspect-ratio)] [background:var(--background)] [width:var(--width)]`;
+
+  if (!animated) {
+    return (
+      <div
+        style={{ ...style, transform: `translateX(-50%) translateY(${frozenY})` }}
+        className={className}
+      />
+    );
+  }
+
   return (
     <motion.div
-      style={
-        {
-          "--x": `${x}`,
-          "--width": `${width}`,
-          "--aspect-ratio": `${ar}`,
-          "--background": `linear-gradient(hsl(${hue} 60% 85%), transparent)`,
-        } as React.CSSProperties
-      }
-      className={`absolute left-[var(--x)] top-0 [aspect-ratio:1/var(--aspect-ratio)] [background:var(--background)] [width:var(--width)]`}
+      style={style}
+      className={className}
       initial={{ y: "100cqmax", x: "-50%" }}
       animate={{ y: "-100%", x: "-50%" }}
       transition={{
@@ -61,6 +81,7 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
   beamDelayMin = 0,
   beamDuration = 3,
   gridColor = "hsl(var(--border))",
+  animated = true,
   ...props
 }) => {
   const generateBeams = useCallback(() => {
@@ -72,7 +93,10 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
       const x = Math.floor(i * step);
       const delay =
         Math.random() * (beamDelayMax - beamDelayMin) + beamDelayMin;
-      beams.push({ x, delay });
+      // Park each beam at a different point along its travel, so a frozen frame
+      // reads as a moment mid-animation rather than a row at a single height.
+      const frozenY = `${15 + (i * 70) / beamsPerSide}cqmax`;
+      beams.push({ x, delay, frozenY });
     }
     return beams;
   }, [beamsPerSide, beamSize, beamDelayMax, beamDelayMin]);
@@ -105,6 +129,8 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
               x={`${beam.x * beamSize}%`}
               delay={beam.delay}
               duration={beamDuration}
+              animated={animated}
+              frozenY={beam.frozenY}
             />
           ))}
         </div>
@@ -117,6 +143,8 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
               x={`${beam.x * beamSize}%`}
               delay={beam.delay}
               duration={beamDuration}
+              animated={animated}
+              frozenY={beam.frozenY}
             />
           ))}
         </div>
@@ -129,6 +157,8 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
               x={`${beam.x * beamSize}%`}
               delay={beam.delay}
               duration={beamDuration}
+              animated={animated}
+              frozenY={beam.frozenY}
             />
           ))}
         </div>
@@ -141,6 +171,8 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
               x={`${beam.x * beamSize}%`}
               delay={beam.delay}
               duration={beamDuration}
+              animated={animated}
+              frozenY={beam.frozenY}
             />
           ))}
         </div>

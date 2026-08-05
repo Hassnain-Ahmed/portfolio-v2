@@ -49,6 +49,7 @@ export default function AboutSection() {
           beamDelayMin={0}
           beamDuration={6}
           gridColor="rgba(0, 0, 0, 0.1)"
+          animated={false}
         >
           <div className="mx-auto w-full max-w-6xl px-4 pt-20 pb-10 md:px-6 md:pt-16 md:pb-16">
             <motion.div
